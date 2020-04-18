@@ -10,6 +10,7 @@ Color fCL = Colors.grey;
 BoxDecoration nMbox = BoxDecoration(
     borderRadius: BorderRadius.circular(15),
     color: mC,
+    //image: imageUrl!=null?DecorationImage(image: NetworkImage(imageUrl)):DecorationImage(image: null),
     boxShadow: [
       BoxShadow(
         color: mCD,

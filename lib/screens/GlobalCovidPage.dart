@@ -1,7 +1,14 @@
+import 'dart:math';
+
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:covid_19/models/CovidDataAllModel.dart';
 import 'package:covid_19/models/CovidDataCountriesModel.dart';
+import 'package:covid_19/screens/DetailedCountryScreen.dart';
+import 'package:covid_19/widgets/GlowFlags.dart';
+import 'package:covid_19/widgets/LoadingIndicator.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
+import 'package:mccounting_text/mccounting_text.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -48,21 +55,21 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
                 children: <Widget>[
                   CustomCard(
                     title: "CASES",
-                    subtitle: _covidDataAllModel.cases.toString(),
+                    end: _covidDataAllModel.cases.toDouble(),
                     color: Colors.yellow,
                   ),
                   CustomCard(
                     title: "ACTIVE",
-                    subtitle: _covidDataAllModel.active.toString(),
+                    end: _covidDataAllModel.active.toDouble(),
                     color: Colors.blue,
                   ),
                   CustomCard(
                       title: "RECOVERED",
-                      subtitle: _covidDataAllModel.recovered.toString(),
+                      end: _covidDataAllModel.recovered.toDouble(),
                       color: Colors.green),
                   CustomCard(
                       title: "DEATHS",
-                      subtitle: _covidDataAllModel.deaths.toString(),
+                      end: _covidDataAllModel.deaths.toDouble(),
                       color: Colors.red)
                 ],
               ),
@@ -72,8 +79,9 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
               style: TextStyle(color: Colors.white, fontSize: 30.0),
             ),
             Container(
-              height: height / 3,
+              height: height / 2.6,
               child: ListView.builder(
+                physics: ScrollPhysics(),
                 itemCount: 4,
                 itemBuilder: (BuildContext context, int index) {
                   return CountryCard(
@@ -86,29 +94,18 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
       );
     }
 
-    Widget dataIsBeingFeteced() {
-      return Center(
-        child: Container(
-          child: SpinKitCircle(
-            itemBuilder: (context, index) => CircleAvatar(),
-          ),
-        ),
-      );
-    }
-
-    return _covidDataAllModel != null ? dataIsPresent() : dataIsBeingFeteced();
+    return _covidDataAllModel != null && _covidDataCountriesModel != null
+        ? dataIsPresent()
+        : LoadingIndicator();
   }
 }
 
 class CustomCard extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final double end;
   final Color color;
   const CustomCard(
-      {@required this.color,
-      @required this.title,
-      @required this.subtitle,
-      Key key})
+      {@required this.color, @required this.title, @required this.end, Key key})
       : super(key: key);
 
   @override
@@ -120,13 +117,13 @@ class CustomCard extends StatelessWidget {
 
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontSize: 30.0, color: color),
-          ),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 30.0, color: Colors.white30),
+          Text(title, style: TextStyle(fontSize: 30.0, color: color)),
+          McCountingText(
+            style: TextStyle(fontSize: 25.0, color: Colors.grey[400]),
+            begin: 0,
+            end: end,
+            duration: Duration(seconds: 9),
+            curve: Curves.easeInSine,
           )
         ],
       ),
@@ -134,14 +131,25 @@ class CustomCard extends StatelessWidget {
   }
 }
 
-class CountryCard extends StatelessWidget {
+class CountryCard extends StatefulWidget {
   final CovidDataCountriesModel covidDataCountriesModel;
   const CountryCard({@required this.covidDataCountriesModel, Key key})
       : super(key: key);
 
   @override
+  _CountryCardState createState() => _CountryCardState();
+}
+
+class _CountryCardState extends State<CountryCard> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+final height =MediaQuery.of(context).size.height;
     Widget text(String text, Color color) {
       return Text(
         text,
@@ -150,42 +158,65 @@ class CountryCard extends StatelessWidget {
     }
 
     return Container(
-        padding: const EdgeInsets.all(10.0),
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                width: width / 1.2,
-                decoration: nMbox,
-                child: ListTile(
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      text("CASES : "+covidDataCountriesModel.cases.toString(),
-                          Colors.yellow),
-                      text("ACTIVE : "+covidDataCountriesModel.active.toString(),
-                          Colors.blue),
-                      text("RECOVERED : "+covidDataCountriesModel.recovered.toString(),
-                          Colors.green),
-                      text("DEATH : "+covidDataCountriesModel.deaths.toString(),
-                          Colors.red),
-                    ],
+     
+     margin: const EdgeInsets.all(10.0),
+      child: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+             width: width/1.23,
+              decoration: nMboxInvert,
+              child: ListTile(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DetailedCountryScreen(
+                      covidDataCountriesModel: widget.covidDataCountriesModel,
+                    ),
                   ),
-                  contentPadding: const EdgeInsets.all(10.0),
-                  title: Text(
-                    covidDataCountriesModel.country,
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    text(
+                        "CASES : " +
+                            widget.covidDataCountriesModel.cases.toString(),
+                        Colors.yellow),
+                    text(
+                        "ACTIVE : " +
+                            widget.covidDataCountriesModel.active.toString(),
+                        Colors.blue),
+                    text(
+                        "RECOVERED : " +
+                            widget.covidDataCountriesModel.recovered.toString(),
+                        Colors.green),
+                    text(
+                        "DEATH : " +
+                            widget.covidDataCountriesModel.deaths.toString(),
+                        Colors.red),
+                  ],
+                ),
+                contentPadding: const EdgeInsets.all(10.0),
+                title: Text(
+                  widget.covidDataCountriesModel.country,
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
               ),
             ),
-            CircleAvatar(
-              radius: width / 15,
-              backgroundImage:
-                  NetworkImage(covidDataCountriesModel.countryInfo.flag),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              //color: Colors.red,
+              height: height/10,
+              width: height/10,
+              child: GlowFlags(
+                flagUrl: widget.covidDataCountriesModel.countryInfo.flag,
+              ),
             ),
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 }

@@ -26,9 +26,10 @@ class MyApp extends StatelessWidget {
         title: 'COVID-19 States',
         theme: ThemeData(
           fontFamily: 'VarelaRound',
-          splashColor: Colors.black,
-          primaryTextTheme: TextTheme(headline1: TextStyle(color: Colors.white)),
-          primaryColor: Colors.black,
+         
+         // primaryColor: Color(0xFF757575),
+         // accentColor: Color(0x00FFFFFF),
+         // canvasColor: Color(0xFF757575),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: PageHolder(),

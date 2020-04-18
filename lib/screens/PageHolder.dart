@@ -1,6 +1,6 @@
 import 'package:covid_19/screens/CountryCovidPage.dart';
 import 'package:covid_19/screens/GlobalCovidPage.dart';
-import 'package:covid_19/screens/test/main1.dart';
+
 import 'package:covid_19/widgets/NavButtons.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class _PageHolderState extends State<PageHolder> {
   Widget build(BuildContext context) {
     Widget bottomNavigationBar() {
       return BottomNavigationBar(
-        backgroundColor: mC,
+      backgroundColor: mC,
         elevation: 0.0,
         iconSize: 0.0,
         onTap: (index) => setState(() {
@@ -44,7 +44,8 @@ class _PageHolderState extends State<PageHolder> {
               down: currentPageIndex != 0 ? true : false,
               icon: Icons.place,
             ),
-          )
+          ),
+         
         ],
       );
     }
@@ -53,6 +54,7 @@ class _PageHolderState extends State<PageHolder> {
       backgroundColor: mC,
       extendBody: true,
       appBar: AppBar(
+        elevation: 0.0,
         backgroundColor: mC,
         title: Text("COVID-19"),
         centerTitle: true,
