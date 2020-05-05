@@ -1,69 +1,137 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:async_resource/file_resource.dart';
 import 'package:covid_19/models/CovidCountyHistoryModel.dart';
+//import 'package:covid_19/models/CovidCountyModel.dart';
 import 'package:covid_19/models/CovidDataAllModel.dart';
 import 'package:covid_19/models/CovidDataCountriesModel.dart';
+import 'package:covid_19/models/CovidDataIndianModel.dart';
+import 'package:covid_19/models/StateDistrictCovidDataModel.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ApiCall {
-  static const String _urlCovidCountries =
-      "https://corona.lmao.ninja/v2/countries?sort=cases";
-  static const String _urlCovidAll = "https://corona.lmao.ninja/v2/all";
+  Future<List<CovidDataCountriesModel>> getFilteredCountries(
+      {String filter}) async {
+    String path = ((await getTemporaryDirectory()).path);
 
-  final _client = Client();
-  var _streamControllerCountries =
-      StreamController<List<CovidDataCountriesModel>>();
-  var _streamControllerAll = StreamController<CovidDataAllModel>();
-  ApiCall() {
-    _getCovidDataCountries();
-    _getCovidDataAll();
-    Timer.periodic(Duration(minutes: 2), (t) {
-      _getCovidDataCountries();
-      _getCovidDataAll();
-    });
-  }
-  Future _getCovidDataCountries() async {
+    String _urlCovidCountries = filter != null
+        ? "https://corona.lmao.ninja/v2/countries?sort=$filter"
+        : "https://corona.lmao.ninja/v2/countries?sort=cases";
+
     try {
-      var response = await _client.get(_urlCovidCountries);
-      List<CovidDataCountriesModel> x =
-          covidDataCountriesModelFromJson(response.body);
-      _streamControllerCountries.add(x);
+      final myDataResource = HttpNetworkResource<List<CovidDataCountriesModel>>(
+        url: _urlCovidCountries,
+        parser: (contents) => covidDataCountriesModelFromJson(contents),
+        cache: FileResource(File('$path/$filter.json')),
+        maxAge: Duration(minutes: 8),
+        strategy: CacheStrategy.cacheFirst,
+      );
+      return myDataResource.get();
     } catch (e) {
       print(e);
       return null;
     }
   }
 
-  Future _getCovidDataAll() async {
+  /*void streamGetFilteredCountries({String filter}) async* {
+    String path = ((await getTemporaryDirectory()).path);
+
+    String _urlCovidCountries = filter != null
+        ? "https://corona.lmao.ninja/v2/countries?sort=$filter"
+        : "https://corona.lmao.ninja/v2/countries?sort=cases";
+
     try {
-      var response = await _client.get(_urlCovidAll);
-      CovidDataAllModel x = covidDataAllModelFromJson(response.body);
-      _streamControllerAll.add(x);
+      final myDataResource = HttpNetworkResource<List<CovidDataCountriesModel>>(
+        url: _urlCovidCountries,
+        parser: (contents) => covidDataCountriesModelFromJson(contents),
+        cache: FileResource(File('$path/$filter.json')),
+        maxAge: Duration(minutes: 8),
+        strategy: CacheStrategy.cacheFirst,
+      );
+    } catch (e) {
+      print(e);
+      yield* null;
+    }
+  }*/
+
+  Future<CovidDataIndianModel> getIndianData() async {
+    String path = ((await getTemporaryDirectory()).path);
+
+    String _urlIndian = "https://api.covid19india.org/data.json";
+
+    try {
+      final myDataResource = HttpNetworkResource<CovidDataIndianModel>(
+        url: _urlIndian,
+        parser: (contents) => covidDataIndianModelFromJson(contents),
+        cache: FileResource(File('$path/indianData.json')),
+        maxAge: Duration(minutes: 8),
+        strategy: CacheStrategy.cacheFirst,
+      );
+      return myDataResource.get();
     } catch (e) {
       print(e);
       return null;
     }
   }
 
-  Future<CovidCountyHistoryModel> _getHistoricalData(String country) async {
+  
+  Future<List<StateDistrictCovidDataModel>> getIndianStateDistrict() async {
+    String path = ((await getTemporaryDirectory()).path);
+
+    String _urlIndian = "https://api.covid19india.org/v2/state_district_wise.json";
+
     try {
-      var response = await _client
-          .get('https://corona.lmao.ninja/v2/historical/$country?lastdays=30');
-      CovidCountyHistoryModel x =
-          covidCountyHistoryModelFromJson(response.body);
-      return x;
+      final myDataResource = HttpNetworkResource<List<StateDistrictCovidDataModel>>(
+        url: _urlIndian,
+        parser: (contents) => stateDistrictCovidDataModelFromJson(contents),
+        cache: FileResource(File('$path/state_district.json')),
+        maxAge: Duration(minutes: 8),
+        strategy: CacheStrategy.cacheFirst,
+      );
+      return myDataResource.get();
     } catch (e) {
       print(e);
       return null;
     }
   }
 
-  Stream<List<CovidDataCountriesModel>> get streamCovidDataCountries =>
-      _streamControllerCountries.stream;
+  Future<CovidDataAllModel> getCovidDataGolobal() async {
+    String _urlCovidAll = "https://corona.lmao.ninja/v2/all";
+    String path = ((await getTemporaryDirectory()).path);
+    try {
+      final myDataResource = HttpNetworkResource<CovidDataAllModel>(
+        url: _urlCovidAll,
+        parser: (contents) => covidDataAllModelFromJson(contents),
+        cache: FileResource(File('$path/allCountries.json')),
+        maxAge: Duration(minutes: 8),
+        strategy: CacheStrategy.cacheFirst,
+      );
+      return myDataResource.get();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 
-  Stream<CovidDataAllModel> get streamCovidDataAll =>
-      _streamControllerAll.stream;
-
-  Future<CovidCountyHistoryModel> getHistoricalData(String country) =>
-      _getHistoricalData(country);
+  Future<CovidCountyHistoryModel> getHistoricalData({String country}) async {
+    String url = "https://corona.lmao.ninja/v2/historical/$country?lastdays=30";
+    String path = ((await getTemporaryDirectory()).path);
+    try {
+      final myDataResource = HttpNetworkResource<CovidCountyHistoryModel>(
+        url: url,
+        parser: (contents) => covidCountyHistoryModelFromJson(contents),
+        cache: FileResource(File('$path/history_$country.json')),
+        maxAge: Duration(minutes: 8),
+        strategy: CacheStrategy.cacheFirst,
+      );
+      return myDataResource.get();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }

@@ -1,5 +1,7 @@
-import 'package:covid_19/screens/CountryCovidPage.dart';
+import 'package:covid_19/screens/CountriesCovidPage.dart';
 import 'package:covid_19/screens/GlobalCovidPage.dart';
+import 'package:covid_19/screens/IndianCovidPage.dart';
+import 'package:covid_19/screens/IndianStatesCovidPage.dart';
 
 import 'package:covid_19/widgets/NavButtons.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
@@ -20,32 +22,53 @@ class _PageHolderState extends State<PageHolder> {
   Widget build(BuildContext context) {
     Widget bottomNavigationBar() {
       return BottomNavigationBar(
-      backgroundColor: mC,
+        type : BottomNavigationBarType.fixed,
+        backgroundColor: mC,
+       selectedFontSize: 15.0,
         elevation: 0.0,
         iconSize: 0.0,
-        onTap: (index) => setState(() {
-          currentPageIndex = index;
-          _pageController.animateToPage(index,
-              duration: Duration(milliseconds: 500), curve: Curves.ease);
-        }),
+        onTap: (index) => setState(
+          () {
+            currentPageIndex = index;
+            _pageController.animateToPage(
+              index,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.ease,
+            );
+          },
+        ),
         currentIndex: currentPageIndex,
+       // type: BottomNavigationBarType.shifting,
         items: [
+         
           BottomNavigationBarItem(
-           
             icon: Container(),
             title: NMButtons(
-              down: currentPageIndex != 0 ? false : true,
+              down: currentPageIndex == 0 ? true : false,
               icon: Icons.language,
             ),
           ),
           BottomNavigationBarItem(
             icon: Container(),
             title: NMButtons(
-              down: currentPageIndex != 0 ? true : false,
+              down: currentPageIndex == 1 ? true : false,
               icon: Icons.place,
             ),
           ),
-         
+           BottomNavigationBarItem(
+            icon: Container(),
+            title: NMButtons(
+              down: currentPageIndex == 2 ? true : false,
+              icon: Icons.home,
+            ),
+          ),
+             BottomNavigationBarItem(
+            icon: Container(),
+            title: NMButtons(
+              down: currentPageIndex == 3 ? true : false,
+              icon: Icons.play_for_work,
+            ),
+          ),
         ],
       );
     }
@@ -53,23 +76,16 @@ class _PageHolderState extends State<PageHolder> {
     return Scaffold(
       backgroundColor: mC,
       extendBody: true,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: mC,
-        title: Text("COVID-19"),
-        centerTitle: true,
-      ),
-      /*  appBar: AppBar(
-        actions: <Widget>[
-          RaisedButton(
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => MainCard())))
-        ],
-      ), */
       body: PageView(
         controller: _pageController,
         physics: ScrollPhysics(),
-        children: <Widget>[GlobalCovidPage(), CountryCovidPage()],
+        children: <Widget>[
+          GlobalCovidPage(),
+          CountriesCovidPage(),
+          IndianCovidPage(),
+         IndianStatesCovidPage()
+          
+        ],
         onPageChanged: (index) => setState(() {
           currentPageIndex = index;
         }),
