@@ -84,13 +84,30 @@ class _IndianStatisticsLineChartDailyState extends State<IndianStatisticsLineCha
         
       ];
     }
+ final simpleNumberFormatter =
+        new charts.BasicNumericTickFormatterSpec.fromNumberFormat(
+      new NumberFormat.compact(),
+    );
 
     return Container(
       child: charts.TimeSeriesChart(
         _createRandomData(),
+         primaryMeasureAxis: charts.NumericAxisSpec(
+          tickFormatterSpec: simpleNumberFormatter,
+          renderSpec: new charts.GridlineRendererSpec(
+            labelStyle: new charts.TextStyleSpec(
+              color: charts.MaterialPalette.white,
+            ),
+            lineStyle: new charts.LineStyleSpec(
+                color: charts.MaterialPalette.gray.shadeDefault,
+                thickness: 0,
+                dashPattern: [2, 2, 1, 1]),
+          ),
+        ),
         behaviors: [
           new charts.SeriesLegend(
-            position: charts.BehaviorPosition.inside,
+            position: charts.BehaviorPosition.bottom,
+            
             horizontalFirst: false,
             cellPadding: const EdgeInsets.only(right: 4.0, bottom: 4.0),
             showMeasures: true,

@@ -13,17 +13,21 @@ class DetailedStateScreen extends StatefulWidget {
 class _DetailedStateScreenState extends State<DetailedStateScreen> {
   @override
   Widget build(BuildContext context) {
-    final district=widget.stateDistrictCovidDataModel;
+    final district = widget.stateDistrictCovidDataModel;
     return Scaffold(
       appBar: AppBar(
         title: Text(district.state),
       ),
       body: Container(
         child: ListView.builder(
-          itemCount:district.districtData.length,
+          itemCount: district.districtData.length,
           itemBuilder: (BuildContext context, int index) {
-          return Container(child: Text(district.districtData[index].active.toString()),);
-         },
+            return Container(
+              child: Text(
+                district.districtData[index].active.toString(),
+              ),
+            );
+          },
         ),
       ),
     );

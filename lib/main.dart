@@ -2,6 +2,7 @@ import 'package:covid_19/models/CovidDataAllModel.dart';
 import 'package:covid_19/models/CovidDataCountriesModel.dart';
 import 'package:covid_19/screens/PageHolder.dart';
 import 'package:covid_19/services/ApiCall.dart';
+import 'package:covid_19/widgets/CustomDrawer.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,9 @@ class MyApp extends StatelessWidget {
         // canvasColor: Color(0xFF757575),
         // visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PageHolder(),
+      home: CustomDrawer(
+        child: PageHolder(),
+      ),
     );
   }
 }

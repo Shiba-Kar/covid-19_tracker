@@ -79,7 +79,7 @@ class ApiCall {
   }
 
   
-  Future<List<StateDistrictCovidDataModel>> getIndianStateDistrict() async {
+  /* Future<List<StateDistrictCovidDataModel>> getIndianStateDistrict() async {
     String path = ((await getTemporaryDirectory()).path);
 
     String _urlIndian = "https://api.covid19india.org/v2/state_district_wise.json";
@@ -97,7 +97,7 @@ class ApiCall {
       print(e);
       return null;
     }
-  }
+  } */
 
   Future<CovidDataAllModel> getCovidDataGolobal() async {
     String _urlCovidAll = "https://corona.lmao.ninja/v2/all";
@@ -117,16 +117,16 @@ class ApiCall {
     }
   }
 
-  Future<CovidCountyHistoryModel> getHistoricalData({String country}) async {
-    String url = "https://corona.lmao.ninja/v2/historical/$country?lastdays=30";
+  Future<CovidCountyHistoryModel> getHistoricalData({String country,int pastRecords}) async {
+    String url = "https://corona.lmao.ninja/v2/historical/$country?lastdays=$pastRecords";
     String path = ((await getTemporaryDirectory()).path);
     try {
       final myDataResource = HttpNetworkResource<CovidCountyHistoryModel>(
         url: url,
         parser: (contents) => covidCountyHistoryModelFromJson(contents),
         cache: FileResource(File('$path/history_$country.json')),
-        maxAge: Duration(minutes: 8),
-        strategy: CacheStrategy.cacheFirst,
+        maxAge: Duration(seconds: 1),
+        strategy: CacheStrategy.networkFirst,
       );
       return myDataResource.get();
     } catch (e) {

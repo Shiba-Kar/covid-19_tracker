@@ -1,4 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:covid_19/models/CovidDataIndianModel.dart';
 import 'package:covid_19/models/StateDistrictCovidDataModel.dart';
 import 'package:covid_19/screens/DetailedCountryScreen.dart';
 import 'package:covid_19/screens/DetailedStateScreen.dart';
@@ -8,7 +9,7 @@ import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
 
 class StateCard extends StatefulWidget {
-  final StateDistrictCovidDataModel stateDistrictCovidDataModel;
+  final Statewise stateDistrictCovidDataModel;
   final int index;
   const StateCard(
       {@required this.stateDistrictCovidDataModel,
@@ -23,13 +24,13 @@ class StateCard extends StatefulWidget {
 class _StateCardState extends State<StateCard>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
-  Animation<double> scaleAnimation;
+  Animation<Offset> scaleAnimation;
   @override
   void initState() {
     controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 700));
-    scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+    scaleAnimation  = Tween<Offset>(begin: Offset(2.0, 0.0), end: Offset.zero)
+        .animate(controller);
 
     controller.addListener(() {
       setState(() {});
@@ -50,8 +51,9 @@ class _StateCardState extends State<StateCard>
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return ScaleTransition(
-      scale: scaleAnimation,
+    return SlideTransition(
+
+      position: scaleAnimation,
       child: Container(
         margin: const EdgeInsets.all(10.0),
         child: Stack(
@@ -64,9 +66,7 @@ class _StateCardState extends State<StateCard>
                 child: ListTile(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) => DetailedStateScreen(
-                              stateDistrictCovidDataModel: widget.stateDistrictCovidDataModel,
-                            )),
+                        builder: (context) => null)
                   ),
                   contentPadding: const EdgeInsets.all(10.0),
                   title: Text(

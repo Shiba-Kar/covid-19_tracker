@@ -1,5 +1,7 @@
 import 'package:covid_19/models/CovidDataIndianModel.dart';
+import 'package:covid_19/screens/GlobalCovidPage.dart';
 import 'package:covid_19/services/ApiCall.dart';
+import 'package:covid_19/widgets/CustomGridCard.dart';
 import 'package:covid_19/widgets/IndianCard.dart';
 
 import 'package:covid_19/widgets/IndianStatisticsLineChartDaily.dart';
@@ -25,6 +27,49 @@ class _IndianCovidPageState extends State<IndianCovidPage> {
     Widget done(CovidDataIndianModel data) {
       return ListView(
         children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(0.0),
+            height: height / 3,
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 2,
+                crossAxisSpacing: 20.0,
+                mainAxisSpacing: 20.0,
+              ),
+              padding: const EdgeInsets.all(10.0),
+              children: <Widget>[
+                CustomGridCard(
+                  showChange: true,
+                  title: "CASES",
+                  end: double.parse(data.statewise[0].confirmed),
+                  color: Colors.yellow,
+                  changeValue: data.statewise[0].deltaconfirmed,
+                ),
+                CustomGridCard(
+                  showChange: false,
+                  title: "ACTIVE",
+                  end: double.parse(data.statewise[0].active),
+                  color: Colors.blue,
+                
+                ),
+                CustomGridCard(
+                  showChange: true,
+                  title: "RECOVERED",
+                  end: double.parse(data.statewise[0].recovered),
+                  color: Colors.green,
+                  changeValue: data.statewise[0].deltarecovered,
+                ),
+                CustomGridCard(
+                  showChange: true,
+                  title: "DEATHS",
+                  end: double.parse(data.statewise[0].deaths),
+                  color: Colors.red,
+                  changeValue: data.statewise[0].deltadeaths,
+                )
+              ],
+            ),
+          ),
           Container(
             padding: const EdgeInsets.all(10.0),
             child: Text(
@@ -69,7 +114,9 @@ class _IndianCovidPageState extends State<IndianCovidPage> {
               physics: ScrollPhysics(),
               itemCount: 4,
               itemBuilder: (BuildContext context, int index) {
-                return IndianCard(sateWise: data.statewise[index]);
+                List<Statewise> statewise = data.statewise;
+                statewise.removeAt(0);
+                return IndianCard(sateWise: statewise[index]);
               },
               // scrollDirection: Axis.horizontal,
             ),

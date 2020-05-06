@@ -3,6 +3,7 @@ import 'package:covid_19/screens/DetailedCountryScreen.dart';
 import 'package:covid_19/widgets/GlowFlags.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CountryCard extends StatefulWidget {
   final CovidDataCountriesModel covidDataCountriesModel;
@@ -15,13 +16,13 @@ class CountryCard extends StatefulWidget {
 
 class _CountryCardState extends State<CountryCard> with SingleTickerProviderStateMixin{
  AnimationController controller;
-  Animation<double> scaleAnimation;
+  Animation<Offset> scaleAnimation;
   @override
   void initState() {
       controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 700));
-    scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+     scaleAnimation  = Tween<Offset>(begin: Offset(2.0, 0.0), end: Offset.zero)
+        .animate(controller);
 
     controller.addListener(() {
       setState(() {});
@@ -46,9 +47,15 @@ class _CountryCardState extends State<CountryCard> with SingleTickerProviderStat
         style: TextStyle(color: color, fontSize: 13.0),
       );
     }
-
-    return ScaleTransition(
-      scale: scaleAnimation,
+ Widget updatedTime() {
+          
+          var x=DateTime.fromMicrosecondsSinceEpoch(widget.covidDataCountriesModel.updated * 1000);
+          var formattedDate = DateFormat.yMMMd().format(x); 
+                
+          return Text("Updated on "+formattedDate,style: TextStyle(color: mCL),);
+        }
+    return SlideTransition(
+      position: scaleAnimation,
           child: Container(
         margin: const EdgeInsets.all(10.0),
         child: Stack(
@@ -110,9 +117,15 @@ class _CountryCardState extends State<CountryCard> with SingleTickerProviderStat
                     ],
                   ),
                   contentPadding: const EdgeInsets.all(10.0),
-                  title: Text(
-                    widget.covidDataCountriesModel.country,
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        widget.covidDataCountriesModel.country,
+                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
+                      updatedTime()
+                    ],
                   ),
                 ),
               ),

@@ -6,6 +6,9 @@ A new Flutter project.
 
 adb connect 127.0.0.1:21503
 
+flutter build apk --target-platform android-arm64 -vv
+flutter faststart
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:

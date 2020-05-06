@@ -15,7 +15,7 @@ class IndianStatesCovidPage extends StatefulWidget {
 
 class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
   final ApiCall _apiCall = ApiCall();
-  List<StateDistrictCovidDataModel> data = [];
+  List<Statewise> data = [];
   @override
   Widget build(BuildContext context) {
     Widget error(error) {
@@ -25,6 +25,7 @@ class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
     }
 
     Widget done() {
+      data.removeAt(0);
       return Container(
         child: Scrollbar(
           child: ListView.builder(
@@ -59,9 +60,9 @@ class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
       ),
       body: Container(
         child: FutureBuilder(
-            future: _apiCall.getIndianStateDistrict(),
+            future: _apiCall.getIndianData(),
             builder: (BuildContext context,
-                AsyncSnapshot<List<StateDistrictCovidDataModel>> snapshot) {
+                AsyncSnapshot<CovidDataIndianModel> snapshot) {
               if (snapshot.hasError) {
                 return error(snapshot.error);
               } else {
@@ -70,7 +71,7 @@ class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
                     return Container();
                     break;
                   case ConnectionState.done:
-                    data = snapshot.data;
+                    data = snapshot.data.statewise;
                     return done();
                     break;
                   case ConnectionState.waiting:
@@ -92,10 +93,10 @@ class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
 }
 
 class SearchStates extends SearchDelegate {
-  final List<StateDistrictCovidDataModel> states;
+  final List<Statewise> states;
   SearchStates({@required this.states});
 
-  List<StateDistrictCovidDataModel> filteredList = [];
+ List<Statewise> filteredList = [];
   @override
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -158,7 +159,7 @@ class SearchStates extends SearchDelegate {
         ),
       );
     } else {
-      List<StateDistrictCovidDataModel> x = states.where((element) {
+      List<Statewise> x = states.where((element) {
         return element.state.toLowerCase().startsWith(query.toLowerCase());
       }).toList();
       filteredList = x;
