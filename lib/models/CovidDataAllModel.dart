@@ -1,5 +1,3 @@
-// To parse this JSON data, do
-//
 //     final covidDataAllModel = covidDataAllModelFromJson(jsonString);
 
 import 'dart:convert';
@@ -17,8 +15,7 @@ class CovidDataAllModel {
     int recovered;
     int active;
     int critical;
-    int casesPerOneMillion;
-    int deathsPerOneMillion;
+    int tests;
 
     CovidDataAllModel({
         this.updated,
@@ -29,8 +26,7 @@ class CovidDataAllModel {
         this.recovered,
         this.active,
         this.critical,
-        this.casesPerOneMillion,
-        this.deathsPerOneMillion,
+        this.tests,
     });
 
     factory CovidDataAllModel.fromJson(Map<String, dynamic> json) => CovidDataAllModel(
@@ -42,8 +38,7 @@ class CovidDataAllModel {
         recovered: json["recovered"],
         active: json["active"],
         critical: json["critical"],
-        casesPerOneMillion: json["casesPerOneMillion"],
-        deathsPerOneMillion: json["deathsPerOneMillion"],
+        tests: json["tests"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -55,7 +50,6 @@ class CovidDataAllModel {
         "recovered": recovered,
         "active": active,
         "critical": critical,
-        "casesPerOneMillion": casesPerOneMillion,
-        "deathsPerOneMillion": deathsPerOneMillion,
+        "tests": tests,
     };
 }
