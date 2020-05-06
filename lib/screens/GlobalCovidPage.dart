@@ -6,10 +6,12 @@ import 'package:covid_19/models/CovidDataCountriesModel.dart';
 import 'package:covid_19/screens/DetailedCountryScreen.dart';
 import 'package:covid_19/services/ApiCall.dart';
 import 'package:covid_19/widgets/CountryCard.dart';
+import 'package:covid_19/widgets/CustomGridCard.dart';
 import 'package:covid_19/widgets/GlowFlags.dart';
 import 'package:covid_19/widgets/LoadingIndicator.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mccounting_text/mccounting_text.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,21 +38,34 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
       }
 
       Widget done(CovidDataAllModel data) {
+        Widget updatedTime() {
+          
+          var x=DateTime.fromMicrosecondsSinceEpoch(data.updated * 1000);
+          var formattedDate = DateFormat.yMMMd().format(x); 
+                
+          return Text("Updated on "+formattedDate);
+        }
+
         return Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "Live Global Statistics",
-                  style: TextStyle(color: Colors.white, fontSize: 30.0),
+                child: Column(
+                 
+                  children: <Widget>[
+                    Text(
+                      "Live Global Statistics",
+                      style: TextStyle(color: Colors.white, fontSize: 30.0),
+                    ),
+                    updatedTime()
+                  ],
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(0.0),
-                height: height / 3,
+                height: height / 2,
                 child: GridView(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -60,24 +75,46 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
                   ),
                   padding: const EdgeInsets.all(10.0),
                   children: <Widget>[
-                    CustomCard(
+                    CustomGridCard(
                       title: "CASES",
                       end: data.cases.toDouble(),
                       color: Colors.yellow,
+                      showChange: true,
+                      changeValue: data.todayCases.toString(),
                     ),
-                    CustomCard(
+                    CustomGridCard(
                       title: "ACTIVE",
                       end: data.active.toDouble(),
                       color: Colors.blue,
+                      showChange: false,
                     ),
-                    CustomCard(
-                        title: "RECOVERED",
-                        end: data.recovered.toDouble(),
-                        color: Colors.green),
-                    CustomCard(
-                        title: "DEATHS",
-                        end: data.deaths.toDouble(),
-                        color: Colors.red)
+                    CustomGridCard(
+                      title: "RECOVERED",
+                      end: data.recovered.toDouble(),
+                      color: Colors.green,
+                      showChange: false,
+                    ),
+                    CustomGridCard(
+                      title: "DEATHS",
+                      end: data.deaths.toDouble(),
+                      color: Colors.red,
+                      showChange: true,
+                      changeValue: data.todayDeaths.toString(),
+                    ),
+                     CustomGridCard(
+                      title: "CRITICAL",
+                      end: data.critical.toDouble(),
+                      color: Colors.orange,
+                      showChange: false,
+                    
+                    ),
+                    CustomGridCard(
+                      title: "TESTS",
+                      end: data.tests.toDouble(),
+                      color: Colors.brown,
+                      showChange: false,
+                    
+                    )
                   ],
                 ),
               ),
@@ -202,40 +239,10 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
       appBar: AppBar(
         backgroundColor: mC,
         elevation: 0.0,
+        centerTitle: true,
         title: Text("Covid-19"),
       ),
       body: body(),
-    );
-  }
-}
-
-class CustomCard extends StatelessWidget {
-  final String title;
-  final double end;
-  final Color color;
-  const CustomCard(
-      {@required this.color, @required this.title, @required this.end, Key key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: nMbox,
-      child: Column(
-        //crossAxisAlignment: CrossAxisAlignment.center,
-
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text(title, style: TextStyle(fontSize: 30.0, color: color)),
-          McCountingText(
-            style: TextStyle(fontSize: 25.0, color: Colors.grey[400]),
-            begin: 0,
-            end: end,
-            duration: Duration(seconds: 2),
-            curve: Curves.easeInSine,
-          )
-        ],
-      ),
     );
   }
 }
