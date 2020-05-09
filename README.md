@@ -1,4 +1,6 @@
-# COVID-19 Tracker ![Image of Yaktocat](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/android/app/src/main/res/mipmap-hdpi/ic_launcher.png)
+# COVID-19 Tracker
+
+![Image of Yaktocat](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/android/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
 This is an aplication build with flutter framework to target IOS, Android and Web.
 This application hit some of the most famous COVID-19 api and serve them in a beautiful UX/UI.
