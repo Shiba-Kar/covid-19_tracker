@@ -7,21 +7,24 @@ import 'package:intl/intl.dart';
 
 class CountryCard extends StatefulWidget {
   final CovidDataCountriesModel covidDataCountriesModel;
-  const CountryCard({@required this.covidDataCountriesModel, Key key})
+  final bool tapable;
+  const CountryCard(
+      {@required this.covidDataCountriesModel, @required this.tapable, Key key})
       : super(key: key);
 
   @override
   _CountryCardState createState() => _CountryCardState();
 }
 
-class _CountryCardState extends State<CountryCard> with SingleTickerProviderStateMixin{
- AnimationController controller;
+class _CountryCardState extends State<CountryCard>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
   Animation<Offset> scaleAnimation;
   @override
   void initState() {
-      controller =
+    controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 400));
-     scaleAnimation  = Tween<Offset>(begin: Offset(2.0, 0.0), end: Offset.zero)
+    scaleAnimation = Tween<Offset>(begin: Offset(2.0, 0.0), end: Offset.zero)
         .animate(controller);
 
     controller.addListener(() {
@@ -37,26 +40,33 @@ class _CountryCardState extends State<CountryCard> with SingleTickerProviderStat
     controller?.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    Widget text(String text, Color color) {
+
+    Widget text(String text, Color color, FontWeight fontWeight) {
       return Text(
         text,
-        style: TextStyle(color: color, fontSize: 13.0),
+        style: TextStyle(color: color, fontSize: 13.0, fontWeight: fontWeight),
       );
     }
- Widget updatedTime() {
-          
-          var x=DateTime.fromMicrosecondsSinceEpoch(widget.covidDataCountriesModel.updated * 1000);
-          var formattedDate = DateFormat.yMMMd().format(x); 
-                
-          return Text("Updated on "+formattedDate,style: TextStyle(color: mCL),);
-        }
+
+    Widget updatedTime() {
+      var x = DateTime.fromMicrosecondsSinceEpoch(
+          widget.covidDataCountriesModel.updated * 1000);
+      var formattedDate = DateFormat.yMMMd().format(x);
+
+      return Text(
+        "Updated on " + formattedDate,
+        style: TextStyle(color: mCL),
+      );
+    }
+
     return SlideTransition(
       position: scaleAnimation,
-          child: Container(
+      child: Container(
         margin: const EdgeInsets.all(10.0),
         child: Stack(
           children: <Widget>[
@@ -66,13 +76,13 @@ class _CountryCardState extends State<CountryCard> with SingleTickerProviderStat
                 width: width / 1.23,
                 decoration: nMboxInvert,
                 child: ListTile(
-                  onTap: () => Navigator.of(context).push(
+                  onTap: () => widget.tapable?Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => DetailedCountryScreen(
                         covidDataCountriesModel: widget.covidDataCountriesModel,
                       ),
                     ),
-                  ),
+                  ):null,
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,36 +92,101 @@ class _CountryCardState extends State<CountryCard> with SingleTickerProviderStat
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          text(
-                              "CASES : " +
-                                  widget.covidDataCountriesModel.cases.toString(),
-                              Colors.yellow),
-                          text(
-                              "ACTIVE : " +
-                                  widget.covidDataCountriesModel.active
-                                      .toString(),
-                              Colors.blue),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  text(
+                                    "CASES : ",
+                                    Colors.yellow,
+                                    FontWeight.bold,
+                                  ),
+                                  text(
+                                    widget.covidDataCountriesModel.cases
+                                        .toString(),
+                                    Colors.yellow,
+                                    FontWeight.normal,
+                                  ),
+                                ],
+                              ),
+                              text(
+                                "+" +
+                                    widget.covidDataCountriesModel.todayCases
+                                        .toString(),
+                                Colors.yellow,
+                                FontWeight.bold,
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              text(
+                                "ACTIVE : ",
+                                Colors.blue,
+                                FontWeight.bold,
+                              ),
+                              text(
+                                widget.covidDataCountriesModel.active
+                                    .toString(),
+                                Colors.blue,
+                                FontWeight.normal,
+                              ),
+                            ],
+                          )
                         ],
                       ),
-                     Divider(
-                       indent: 50.0,
-                       color: Colors.white,
-                       endIndent: 50.0,
-                     ),
+                      Divider(
+                        // indent: 50.0,
+                        color: Colors.white,
+                        // endIndent: 50.0,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          text(
-                              "RECOVERED : " +
-                                  widget.covidDataCountriesModel.recovered
-                                      .toString(),
-                              Colors.green),
-                          text(
-                              "DEATH : " +
-                                  widget.covidDataCountriesModel.deaths
-                                      .toString(),
-                              Colors.red),
+                          Row(
+                            children: <Widget>[
+                              text(
+                                "RECOVERED : ",
+                                Colors.green,
+                                FontWeight.bold,
+                              ),
+                              text(
+                                widget.covidDataCountriesModel.recovered
+                                    .toString(),
+                                Colors.green,
+                                FontWeight.normal,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  text(
+                                    "DEATH : ",
+                                    Colors.red,
+                                    FontWeight.bold,
+                                  ),
+                                  text(
+                                    widget.covidDataCountriesModel.deaths
+                                        .toString(),
+                                    Colors.red,
+                                    FontWeight.normal,
+                                  ),
+                                ],
+                              ),
+                              text(
+                                "+" +
+                                    widget.covidDataCountriesModel.todayDeaths
+                                        .toString(),
+                                Colors.red,
+                                FontWeight.bold,
+                              )
+                            ],
+                          ),
                         ],
                       )
                     ],
@@ -122,7 +197,10 @@ class _CountryCardState extends State<CountryCard> with SingleTickerProviderStat
                     children: <Widget>[
                       Text(
                         widget.covidDataCountriesModel.country,
-                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                        ),
                       ),
                       updatedTime()
                     ],
