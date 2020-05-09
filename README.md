@@ -21,7 +21,7 @@ The below points enlists features of this application :
    * Total deaths
    * District wise statistics
 
-4. Data updaates every 10 minutes.
+4. Data updates every 10 minutes.
 
 ## Getting Started
 
