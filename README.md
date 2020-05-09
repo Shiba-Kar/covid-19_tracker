@@ -13,9 +13,7 @@ The below points enlists features of this application:
 
 ## Getting Started
 
-adb connect 127.0.0.1:21503
-
-flutter build apk --target-platform android-arm64 -vv
+`flutter build apk --target-platform android-arm64 -vv`
 
 This project is a starting point for a Flutter application.
 
