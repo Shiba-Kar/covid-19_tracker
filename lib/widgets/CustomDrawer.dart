@@ -8,8 +8,7 @@ class CustomDrawer extends StatefulWidget {
 
   const CustomDrawer({Key key, this.child}) : super(key: key);
 
-  static CustomDrawerState of(BuildContext context) =>
-      context.findAncestorStateOfType<CustomDrawerState>();
+  static CustomDrawerState of(BuildContext context) =>context.findAncestorStateOfType<CustomDrawerState>();
 
   @override
   CustomDrawerState createState() => new CustomDrawerState();
@@ -78,10 +77,13 @@ class CustomDrawerState extends State<CustomDrawer>
                 Positioned(
                   top: 4.0 + MediaQuery.of(context).padding.top,
                   left: 4.0 + animationController.value * maxSlide,
-                  child: IconButton(
-                    icon: Icon(Icons.menu),
-                    onPressed: toggle,
-                    color: Colors.white,
+                  child: Container(
+                    decoration: nMbox,
+                    child: IconButton(
+                      icon: Icon(Icons.menu),
+                      onPressed: toggle,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                
@@ -141,11 +143,15 @@ class MyDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                 Image.asset(
+                 Container(
+                   margin: const EdgeInsets.all(10.0),
+                   decoration: nMbox,
+                   child: Image.asset(
             
-                  'assets/images/drawer.png',
-                  fit: BoxFit.fill,
-                ), 
+                    'assets/images/drawer.png',
+                    fit: BoxFit.fill,
+                ),
+                 ), 
                 ListTile(
                   leading: Icon(Icons.new_releases),
                   title: Text('News'),
