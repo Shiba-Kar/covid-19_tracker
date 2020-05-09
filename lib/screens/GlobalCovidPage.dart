@@ -1,20 +1,13 @@
-import 'dart:math';
-
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:covid_19/models/CovidDataAllModel.dart';
 import 'package:covid_19/models/CovidDataCountriesModel.dart';
-import 'package:covid_19/screens/DetailedCountryScreen.dart';
 import 'package:covid_19/services/ApiCall.dart';
+import 'package:covid_19/widgets/AboutMeDialog.dart';
 import 'package:covid_19/widgets/CountryCard.dart';
 import 'package:covid_19/widgets/CustomGridCard.dart';
-import 'package:covid_19/widgets/GlowFlags.dart';
 import 'package:covid_19/widgets/LoadingIndicator.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mccounting_text/mccounting_text.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class GlobalCovidPage extends StatefulWidget {
   GlobalCovidPage({Key key}) : super(key: key);
@@ -39,21 +32,18 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
 
       Widget done(CovidDataAllModel data) {
         Widget updatedTime() {
-          
-          var x=DateTime.fromMicrosecondsSinceEpoch(data.updated * 1000);
-          var formattedDate = DateFormat.yMMMd().format(x); 
-                
-          return Text("Updated on "+formattedDate);
+          var x = DateTime.fromMicrosecondsSinceEpoch(data.updated * 1000);
+          var formattedDate = DateFormat.yMMMd().format(x);
+
+          return Text("Updated on " + formattedDate);
         }
 
         return Container(
           child: ListView(
-            
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
-                 
                   children: <Widget>[
                     Text(
                       "Live Global Statistics",
@@ -101,103 +91,79 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
                       showChange: true,
                       changeValue: data.todayDeaths.toString(),
                     ),
-                     CustomGridCard(
+                    CustomGridCard(
                       title: "CRITICAL",
                       end: data.critical.toDouble(),
                       color: Colors.orange,
                       showChange: false,
-                    
                     ),
                     CustomGridCard(
                       title: "TESTS",
                       end: data.tests.toDouble(),
                       color: Colors.brown,
                       showChange: false,
-                    
                     )
                   ],
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "Worst Affected Countries",
-                  style: TextStyle(color: Colors.white, fontSize: 30.0),
+                child: Center(
+                  child: Text(
+                    "Worst Affected Countries",
+                    style: TextStyle(color: Colors.white, fontSize: 30.0),
+                  ),
                 ),
               ),
               FutureBuilder(
-                  future: _apiCall.getFilteredCountries(filter: null),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<CovidDataCountriesModel>> snapshot) {
-                    if (snapshot.hasError) {
+                future: _apiCall.getFilteredCountries(filter: null),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<CovidDataCountriesModel>> snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      child: Center(child: Text(snapshot.error)),
+                    );
+                  } else {
+                    Widget done(List<CovidDataCountriesModel> data) {
                       return Container(
-                        child: Center(child: Text(snapshot.error)),
+                        height: height / 2.6,
+                        child: ListView.builder(
+                          physics: ScrollPhysics(),
+                          itemCount: 4,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CountryCard(
+                              tapable: true,
+                              covidDataCountriesModel: data[index],
+                            );
+                          },
+                        ),
                       );
-                    } else {
-                      Widget done(List<CovidDataCountriesModel> data) {
-                        return Container(
-                          height: height / 2.6,
-                          child: ListView.builder(
-                            physics: ScrollPhysics(),
-                            itemCount: 4,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CountryCard(
-                                  covidDataCountriesModel: data[index]);
-                            },
-                          ),
-                        );
-                      }
-
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.active:
-                          return active();
-                          break;
-                        case ConnectionState.done:
-                          return done(snapshot.data);
-                          break;
-                        case ConnectionState.waiting:
-                          return LoadingIndicator();
-                          break;
-                        case ConnectionState.none:
-                          return LoadingIndicator();
-                          break;
-                        default:
-                          return Container(
-                            child: Text("In defult"),
-                          );
-                      }
                     }
 
-                    /*  Container(
-              height: height / 2.6,
-              child: ListView.builder(
-                physics: ScrollPhysics(),
-                itemCount: 4,
-                itemBuilder: (BuildContext context, int index) {
-                  return CountryCard(
-                      covidDataCountriesModel: data[index]);
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.active:
+                        return active();
+                        break;
+                      case ConnectionState.done:
+                        return done(snapshot.data);
+                        break;
+                      case ConnectionState.waiting:
+                        return LoadingIndicator();
+                        break;
+                      case ConnectionState.none:
+                        return LoadingIndicator();
+                        break;
+                      default:
+                        return Container(
+                          child: Text("In defult"),
+                        );
+                    }
+                  }
                 },
-              ),
-            ) */
-                  })
+              )
             ],
           ),
         );
-
-        //////////////////////////
-        /*  return Container(
-          child: Scrollbar(
-            child: ListView.builder(
-              physics: ScrollPhysics(),
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return CountryCard(
-                  covidDataCountriesModel: data[index],
-                );
-              },
-            ),
-          ),
-        ); */
       }
 
       Widget error(Object error) {
@@ -237,10 +203,25 @@ class _GlobalCovidPageState extends State<GlobalCovidPage> {
     return Scaffold(
       backgroundColor: mC,
       appBar: AppBar(
+       /*  actions: <Widget>[
+          Container(
+            decoration: nMbox,
+            margin: const EdgeInsets.all(7.0),
+            child: IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () => showDialog(
+                context: context,
+                barrierDismissible: true,
+
+                builder: (BuildContext context) => AboutMeDialog(),
+              ),
+            ),
+          )
+        ], */
         backgroundColor: mC,
         elevation: 0.0,
         centerTitle: true,
-        title: Text("Covid-19"),
+        title: Text("COVID-19 Tracker"),
       ),
       body: body(),
     );
