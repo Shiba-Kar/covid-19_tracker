@@ -25,25 +25,33 @@ class _IndianStatisticsLineChartTotalState
         widget.indianCovidDataModel.casesTimeSeries;
 
     List<charts.Series<LinearPeople, DateTime>> _createRandomData() {
-      DateFormat format = DateFormat('dd MMMM');
+     DateFormat format = DateFormat.yMMMd();
 
       List<LinearPeople> totalconfirmed = [];
       List<LinearPeople> totaldeceased = [];
       List<LinearPeople> totalrecovered = [];
 
+      DateTime addYearAndFormat(String date) {
+      
+        var dateTime3 = DateFormat('dd MMMM').parse(date);
+        var y =
+            DateFormat.yMMMd().format(dateTime3).replaceAll(', 1970', ', 2020');
+        return format.parse(y);
+      }
+
       for (var i = 0; i < data.length; i++) {
         totalconfirmed.add(LinearPeople(
-            format.parse(data[i].date), int.parse(data[i].totalconfirmed)));
+            addYearAndFormat(data[i].date), int.parse(data[i].totalconfirmed)));
         totaldeceased.add(LinearPeople(
-            format.parse(data[i].date), int.parse(data[i].totaldeceased)));
+            addYearAndFormat(data[i].date), int.parse(data[i].totaldeceased)));
         totalrecovered.add(LinearPeople(
-            format.parse(data[i].date), int.parse(data[i].totalrecovered)));
+            addYearAndFormat(data[i].date), int.parse(data[i].totalrecovered)));
       }
 
       return [
         charts.Series<LinearPeople, DateTime>(
           id: "totalconfirmed",
-         // strokeWidthPxFn: (datum, index) => 5.0,
+          // strokeWidthPxFn: (datum, index) => 5.0,
           displayName: "Total Confirmed",
           colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
           domainFn: (LinearPeople sales, _) => sales.date,
@@ -52,7 +60,7 @@ class _IndianStatisticsLineChartTotalState
         ),
         charts.Series<LinearPeople, DateTime>(
           id: "totaldeceased",
-         // strokeWidthPxFn: (datum, index) => 5.0,
+          // strokeWidthPxFn: (datum, index) => 5.0,
           displayName: "Total Deceased",
           colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
           domainFn: (LinearPeople sales, _) => sales.date,
@@ -70,7 +78,8 @@ class _IndianStatisticsLineChartTotalState
         )
       ];
     }
-final simpleNumberFormatter =
+
+    final simpleNumberFormatter =
         new charts.BasicNumericTickFormatterSpec.fromNumberFormat(
       new NumberFormat.compact(),
     );
@@ -78,7 +87,7 @@ final simpleNumberFormatter =
     return Container(
       child: charts.TimeSeriesChart(
         _createRandomData(),
-          primaryMeasureAxis: charts.NumericAxisSpec(
+        primaryMeasureAxis: charts.NumericAxisSpec(
           tickFormatterSpec: simpleNumberFormatter,
           renderSpec: new charts.GridlineRendererSpec(
             labelStyle: new charts.TextStyleSpec(
@@ -88,6 +97,19 @@ final simpleNumberFormatter =
                 color: charts.MaterialPalette.gray.shadeDefault,
                 thickness: 0,
                 dashPattern: [2, 2, 1, 1]),
+          ),
+        ),
+        domainAxis: charts.DateTimeAxisSpec(
+          renderSpec: new charts.GridlineRendererSpec(
+            labelAnchor: charts.TickLabelAnchor.inside,
+            lineStyle: new charts.LineStyleSpec(
+              color: charts.MaterialPalette.gray.shadeDefault,
+              thickness: 0,
+              dashPattern: [2, 2, 1, 1],
+            ),
+            labelStyle: new charts.TextStyleSpec(
+              color: charts.MaterialPalette.white,
+            ),
           ),
         ),
         behaviors: [
@@ -109,8 +131,6 @@ final simpleNumberFormatter =
           stacked: false,
           areaOpacity: 0.4,
           includeLine: true,
-          
-
           radiusPx: 3.0,
           roundEndCaps: true,
         ),
