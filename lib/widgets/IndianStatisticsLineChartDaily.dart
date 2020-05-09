@@ -16,60 +16,64 @@ class IndianStatisticsLineChartDaily extends StatefulWidget {
       _IndianStatisticsLineChartDailyState();
 }
 
-class _IndianStatisticsLineChartDailyState extends State<IndianStatisticsLineChartDaily> {
+class _IndianStatisticsLineChartDailyState
+    extends State<IndianStatisticsLineChartDaily> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final List<CasesTimeSery> data =
-        widget.indianCovidDataModel.casesTimeSeries;
+    final List<CasesTimeSery> data =widget.indianCovidDataModel.casesTimeSeries;
 
     List<charts.Series<LinearPeople, DateTime>> _createRandomData() {
-      DateFormat format = DateFormat('dd MMMM');
+      DateFormat format = DateFormat.yMMMd();
       List<LinearPeople> dailyconfirmed = [];
       List<LinearPeople> dailydeceased = [];
       List<LinearPeople> dailyrecovered = [];
-    
-     
+      
+      
+      DateTime addYearAndFormat(String date) {
+        var dateTime3 = DateFormat('dd MMMM').parse(date);
+        var y =
+            DateFormat.yMMMd().format(dateTime3).replaceAll(', 1970', ', 2020');
+        return format.parse(y);
+      }
 
       for (var i = 0; i < data.length; i++) {
         dailyconfirmed.add(LinearPeople(
-            format.parse(data[i].date), int.parse(data[i].dailyconfirmed)));
+            addYearAndFormat(data[i].date), int.parse(data[i].dailyconfirmed)));
         dailydeceased.add(LinearPeople(
-            format.parse(data[i].date), int.parse(data[i].dailydeceased)));
+            addYearAndFormat(data[i].date), int.parse(data[i].dailydeceased)));
         dailyrecovered.add(LinearPeople(
-            format.parse(data[i].date), int.parse(data[i].dailyrecovered)));
+            addYearAndFormat(data[i].date), int.parse(data[i].dailyrecovered)));
       }
-    for (var i = 0; i < dailyconfirmed.length; i++) {
-      print(dailyconfirmed[i].date);
-    }
-     
+      /* for (var i = 0; i < dailyconfirmed.length; i++) {
+        var x = dailyconfirmed[i].date.millisecondsSinceEpoch;
+
+        var y = DateTime.fromMillisecondsSinceEpoch(x * 1000);
+        var formattedDate = DateFormat.yMMMd().format(y);
+        print(formattedDate);
+      } */
 
       return [
-     
-         charts.Series<LinearPeople, DateTime>(
+        charts.Series<LinearPeople, DateTime>(
           id: "dailyconfirmed",
-         // strokeWidthPxFn: (datum, index) => 5.0,
+          // strokeWidthPxFn: (datum, index) => 5.0,
           displayName: "Daily Confirmed",
           colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
           domainFn: (LinearPeople sales, _) => sales.date,
           measureFn: (LinearPeople sales, _) => sales.people,
           data: dailyconfirmed,
         ),
-
-
-         charts.Series<LinearPeople, DateTime>(
+        charts.Series<LinearPeople, DateTime>(
           id: "dailydeceased",
-         // strokeWidthPxFn: (datum, index) => 5.0,
+          // strokeWidthPxFn: (datum, index) => 5.0,
           displayName: "Daily Deceased",
           colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
           domainFn: (LinearPeople sales, _) => sales.date,
           measureFn: (LinearPeople sales, _) => sales.people,
           data: dailyrecovered,
         ),
-
-
-         charts.Series<LinearPeople, DateTime>(
+        charts.Series<LinearPeople, DateTime>(
           id: "dailyrecovered",
           strokeWidthPxFn: (datum, index) => 3.0,
           displayName: "Daily Recovered",
@@ -78,13 +82,10 @@ class _IndianStatisticsLineChartDailyState extends State<IndianStatisticsLineCha
           measureFn: (LinearPeople sales, _) => sales.people,
           data: dailyrecovered,
         ),
-
-
-
-        
       ];
     }
- final simpleNumberFormatter =
+
+    final simpleNumberFormatter =
         new charts.BasicNumericTickFormatterSpec.fromNumberFormat(
       new NumberFormat.compact(),
     );
@@ -92,22 +93,37 @@ class _IndianStatisticsLineChartDailyState extends State<IndianStatisticsLineCha
     return Container(
       child: charts.TimeSeriesChart(
         _createRandomData(),
-         primaryMeasureAxis: charts.NumericAxisSpec(
+        primaryMeasureAxis: charts.NumericAxisSpec(
           tickFormatterSpec: simpleNumberFormatter,
           renderSpec: new charts.GridlineRendererSpec(
             labelStyle: new charts.TextStyleSpec(
               color: charts.MaterialPalette.white,
             ),
             lineStyle: new charts.LineStyleSpec(
-                color: charts.MaterialPalette.gray.shadeDefault,
-                thickness: 0,
-                dashPattern: [2, 2, 1, 1]),
+              color: charts.MaterialPalette.gray.shadeDefault,
+              thickness: 0,
+              dashPattern: [2, 2, 1, 1],
+            ),
+          ),
+        ),
+        domainAxis: charts.DateTimeAxisSpec(
+          renderSpec: new charts.GridlineRendererSpec(
+            labelAnchor: charts.TickLabelAnchor.inside,
+            lineStyle: new charts.LineStyleSpec(
+              color: charts.MaterialPalette.gray.shadeDefault,
+              thickness: 0,
+              dashPattern: [2, 2, 1, 1],
+            ),
+            labelStyle: new charts.TextStyleSpec(
+              color: charts.MaterialPalette.white,
+            ),
           ),
         ),
         behaviors: [
           new charts.SeriesLegend(
             position: charts.BehaviorPosition.bottom,
-            
+           
+          
             horizontalFirst: false,
             cellPadding: const EdgeInsets.only(right: 4.0, bottom: 4.0),
             showMeasures: true,
@@ -118,21 +134,18 @@ class _IndianStatisticsLineChartDailyState extends State<IndianStatisticsLineCha
               return value==null?'-':'$value';
             } */
           ),
-          new charts.SelectNearest(), new charts.DomainHighlighter()
+          new charts.SelectNearest(),
+          new charts.DomainHighlighter()
         ],
-        defaultRenderer:charts.LineRendererConfig(
+        defaultRenderer: charts.LineRendererConfig(
           includeArea: true,
           stacked: false,
-          
 
           // includeLine: false,
           radiusPx: 3.0,
           roundEndCaps: true,
         ),
-
-        
         animate: true,
-        
         dateTimeFactory: const charts.LocalDateTimeFactory(),
       ),
     );
