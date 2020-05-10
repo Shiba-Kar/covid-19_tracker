@@ -81,8 +81,9 @@ class _StateCardState extends State<StateCard>
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => DistrictsScreen(
-                          stateCode: widget.stateWise.statecode,
-                          state: widget.stateWise.state),
+                        stateCode: widget.stateWise.statecode,
+                        state: widget.stateWise.state,
+                      ),
                     ),
                   ),
                   contentPadding: const EdgeInsets.all(10.0),
