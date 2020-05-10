@@ -29,6 +29,7 @@ The below points enlists features of this application :
 
 1. Build apk 64 bit: `flutter build apk --target-platform android-arm64 -vv`
 2. Build apk 64/32 bit: `flutter build apk  -vv`
+3. Build Bundle : `flutter build appbundle -vv`
 
 ## Screenshots
 
