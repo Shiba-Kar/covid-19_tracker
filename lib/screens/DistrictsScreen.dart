@@ -1,6 +1,6 @@
 import 'package:covid_19/models/StateDistrictCovidDataModel.dart';
 import 'package:covid_19/services/ApiCall.dart';
-import 'package:covid_19/widgets/DistrictGridCard.dart';
+import 'package:covid_19/widgets/DistrictCard.dart';
 import 'package:covid_19/widgets/LoadingIndicator.dart';
 import 'package:flutter/material.dart';
 
@@ -25,26 +25,21 @@ class _DistrictsScreenState extends State<DistrictsScreen> {
       );
     }
 
+    
+
     final height = MediaQuery.of(context).size.height;
 
     Widget done() {
       return Scrollbar(
-              child: CustomScrollView(
-          slivers: <Widget>[
-            SliverGrid(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  print(data.length);
-                  return DistrictGridCard(
-                    district: data[index],
-                  );
-                },
-                childCount: data.length,
-              ),
-            ),
-          ],
+        child: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (BuildContext context, int index) {
+            print(data.length);
+            return DistrictCard(
+              index: index,
+              district: data[index],
+            );
+          },
         ),
       );
     }
