@@ -1,5 +1,4 @@
 import 'package:covid_19/models/CovidDataIndianModel.dart';
-import 'package:covid_19/models/StateDistrictCovidDataModel.dart';
 import 'package:covid_19/services/ApiCall.dart';
 import 'package:covid_19/widgets/LoadingIndicator.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
@@ -33,7 +32,8 @@ class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 child: StateCard(
-                  stateDistrictCovidDataModel: data[index],
+                  tapable: true,
+                  stateWise: data[index],
                   index: index,
                 ),
               );
@@ -49,13 +49,14 @@ class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
         title: Text("Indian States"),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
+          Container(
+              child: IconButton(
             icon: Icon(Icons.search),
             onPressed: () => showSearch(
               context: context,
-              delegate: SearchStates(states: data),
+              delegate: SearchStates(stateDistrict: data),
             ).then((value) => print(value.country)),
-          )
+          ))
         ],
       ),
       body: Container(
@@ -93,10 +94,10 @@ class _IndianStatesCovidPageState extends State<IndianStatesCovidPage> {
 }
 
 class SearchStates extends SearchDelegate {
-  final List<Statewise> states;
-  SearchStates({@required this.states});
+  final List<Statewise> stateDistrict;
+  SearchStates({@required this.stateDistrict});
 
- List<Statewise> filteredList = [];
+  List<Statewise> filteredList = [];
   @override
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -159,19 +160,22 @@ class SearchStates extends SearchDelegate {
         ),
       );
     } else {
-      List<Statewise> x = states.where((element) {
+      List<Statewise> x = stateDistrict.where((element) {
         return element.state.toLowerCase().startsWith(query.toLowerCase());
       }).toList();
       filteredList = x;
 
       return Container(
         child: ListView.builder(
-            itemCount: filteredList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return StateCard(
-                  index: index,
-                  stateDistrictCovidDataModel: filteredList[index]);
-            }),
+          itemCount: filteredList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return StateCard(
+              tapable: true,
+              index: index,
+              stateWise: filteredList[index],
+            );
+          },
+        ),
       );
     }
   }
@@ -184,7 +188,7 @@ class SearchStates extends SearchDelegate {
           onPressed: () {
             query = "";
           }),
-      IconButton(icon: Icon(Icons.mic), onPressed: () {})
+     // IconButton(icon: Icon(Icons.mic), onPressed: () {})
     ];
   }
 }
