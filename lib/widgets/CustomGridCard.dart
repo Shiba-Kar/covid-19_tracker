@@ -17,16 +17,19 @@ class CustomGridCard extends StatelessWidget {
     @required this.end,
     @required this.showChange,
     this.changeValue,
-  
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     Widget iconShow() {
       return Row(
         children: <Widget>[
-          Text("   "+changeValue,style: TextStyle(color: color),),
+          Text(
+            "   +" + changeValue,
+            style: TextStyle(color: color,fontSize: width/45),
+          ),
           Icon(
             Icons.arrow_upward,
             color: color,
@@ -42,13 +45,13 @@ class CustomGridCard extends StatelessWidget {
 
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Text(title, style: TextStyle(fontSize: 30.0, color: color)),
+          Text(title, style: TextStyle(fontSize: width/18, color: color)),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               McCountingText(
-                style: TextStyle(fontSize: 25.0, color: Colors.grey[400]),
+                style: TextStyle(fontSize: width/18, color: Colors.grey[400]),
                 begin: 0,
                 end: end,
                 duration: Duration(seconds: 2),
