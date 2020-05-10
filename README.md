@@ -38,7 +38,7 @@ The below points enlists features of this application :
 
 ![ScreenShot 5](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_05.png) ![ScreenShot 6](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_06.png)
 
-![ScreenShot 7](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_07.png)
+![ScreenShot 7](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_07.png) ![ScreenShot 8](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_08.png)
 
 ## COVID-19 APIs
 
