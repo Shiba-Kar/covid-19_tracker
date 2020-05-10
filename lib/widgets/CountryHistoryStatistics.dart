@@ -86,7 +86,7 @@ class _CountryHistoryStatisticsState extends State<CountryHistoryStatistics> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Text("Show  "),
+              Text("Statistics for "),
               DropdownButton(
                 underline: Container(),
                 onChanged: (value) {
@@ -112,8 +112,16 @@ class _CountryHistoryStatisticsState extends State<CountryHistoryStatistics> {
                     value: 90,
                   ),
                   DropdownMenuItem(
-                    child: Text("200"),
-                    value: 200,
+                    child: Text("120"),
+                    value: 120,
+                  ),
+                   DropdownMenuItem(
+                    child: Text("150"),
+                    value: 150,
+                  ),
+                   DropdownMenuItem(
+                    child: Text("180"),
+                    value: 180,
                   ),
                 ],
                 value: _pastRecords,
