@@ -1,6 +1,6 @@
 # COVID-19 Tracker
 
-![Image of Yaktocat](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/android/app/src/main/res/mipmap-hdpi/ic_launcher.png)
+![App Icon](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/android/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
 This is an aplication build with flutter framework to target IOS, Android and Web.
 This application hit some of the most famous COVID-19 api and serve them in a beautiful UX/UI.
@@ -27,9 +27,18 @@ The below points enlists features of this application :
 
 ## Getting Started
 
-1. Build apk: `flutter build apk --target-platform android-arm64 -vv`
+1. Build apk 64 bit: `flutter build apk --target-platform android-arm64 -vv`
+2. Build apk 64/32 bit: `flutter build apk  -vv`
 
-This project is a starting point for a Flutter application.
+## Screenshots
+
+![ScreenShot 1](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png)
+![ScreenShot 2](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_02.png)
+![ScreenShot 3](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_03.png)
+![ScreenShot 4](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_04.png)
+![ScreenShot 5](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_05.png)
+![ScreenShot 6](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_06.png)
+![ScreenShot 7](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_07.png)
 
 ## COVID-19 APIs
 
