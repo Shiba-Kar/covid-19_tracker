@@ -3,6 +3,7 @@ import 'package:covid_19/models/CovidDataCountriesModel.dart';
 import 'package:covid_19/services/ApiCall.dart';
 import 'package:covid_19/widgets/CountryCard.dart';
 import 'package:covid_19/widgets/LoadingIndicator.dart';
+import 'package:covid_19/widgets/NavButtons.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
 
@@ -65,6 +66,7 @@ class _CountriesCovidPageState extends State<CountriesCovidPage> {
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
                 return CountryCard(
+                  tapable: true,
                   covidDataCountriesModel: data[index],
                 );
               },
@@ -149,12 +151,17 @@ class _CountriesCovidPageState extends State<CountriesCovidPage> {
         title: Text("Countries Statistics"),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () => showSearch(
-              context: context,
-              delegate: SearchCountries(countries: data),
-            ).then((value) => print(value.country)),
+         
+          Container(
+            decoration:nMbox,
+            margin: const EdgeInsets.all(7.0),
+            child: IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => showSearch(
+                context: context,
+                delegate: SearchCountries(countries: data),
+              ).then((value) => print(value.country)),
+            ),
           )
         ],
       ),
@@ -250,7 +257,9 @@ class SearchCountries extends SearchDelegate<CovidDataCountriesModel> {
         child: ListView.builder(
             itemCount: filteredList.length,
             itemBuilder: (BuildContext context, int index) {
-              return CountryCard(covidDataCountriesModel: filteredList[index]);
+              return CountryCard(
+                tapable: true,
+                covidDataCountriesModel: filteredList[index]);
             }),
       );
     }
