@@ -32,17 +32,11 @@ The below points enlists features of this application :
 
 ## Screenshots
 
-![test image size](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png)
+![test image size](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png) ![ScreenShot 2](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_02.png)
 
-![ScreenShot 2](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_02.png)
+![ScreenShot 3](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_03.png) ![ScreenShot 4](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_04.png)
 
-![ScreenShot 3](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_03.png)
-
-![ScreenShot 4](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_04.png)
-
-![ScreenShot 5](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_05.png)
-
-![ScreenShot 6](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_06.png)
+![ScreenShot 5](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_05.png) ![ScreenShot 6](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_06.png)
 
 ![ScreenShot 7](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_07.png)
 
