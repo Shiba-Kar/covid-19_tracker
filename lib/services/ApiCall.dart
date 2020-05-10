@@ -57,14 +57,12 @@ class ApiCall {
   Future<List<DistrictDatum>> getDistricts(String stateCode) async {
     String path = ((await getTemporaryDirectory()).path);
 
-    String _urlIndian =
-        "https://api.covid19india.org/v2/state_district_wise.json";
+    String _urlIndian ="https://api.covid19india.org/v2/state_district_wise.json";
 
     List<DistrictDatum> filteredList = [];
 
     try {
-      final myDataResource =
-          HttpNetworkResource<List<StateDistrictCovidDataModel>>(
+      final myDataResource =HttpNetworkResource<List<StateDistrictCovidDataModel>>(
         url: _urlIndian,
         parser: (contents) => stateDistrictCovidDataModelFromJson(contents),
         cache: FileResource(File('$path/state_district.json')),
@@ -73,9 +71,7 @@ class ApiCall {
       );
       var x = await myDataResource.get();
 
-      var y = x
-          .where((element) => element.statecode.startsWith(stateCode))
-          .toList();
+      var y = x.where((element) => element.statecode.startsWith(stateCode)).toList();
       for (var item in y[0].districtData) {
         filteredList.add(item);
       }
