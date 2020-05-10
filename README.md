@@ -31,7 +31,9 @@ The below points enlists features of this application :
 2. Build apk 64/32 bit: `flutter build apk  -vv`
 
 ## Screenshots
-<img src="https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png" width="40%">
+
+![test image size](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png){:height="700px" width="400px"}
+
 ![ScreenShot 2](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_02.png?s=200)
 ![ScreenShot 3](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_03.png?s=200)
 ![ScreenShot 4](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_04.png?s=200)
