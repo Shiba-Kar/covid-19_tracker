@@ -1,20 +1,9 @@
-import 'package:covid_19/models/CovidDataAllModel.dart';
-import 'package:covid_19/models/CovidDataCountriesModel.dart';
 import 'package:covid_19/screens/PageHolder.dart';
-import 'package:covid_19/services/ApiCall.dart';
-import 'package:covid_19/widgets/CustomDrawer.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-//import 'package:syncfusion_flutter_core/core.dart';
-void main() {
-  // SyncfusionLicense.registerLicense("NT8mJyc2IWhia31ifWN9YGVoZ3xhZnxhY2Fjc2JiaWFiaWBjcwMeaCA7OjEyIyEyIDI3ODIhZmMTND4yOj99MDw+");
-
-  runApp(new MyApp());
-}
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -33,12 +22,8 @@ class MyApp extends StatelessWidget {
         backgroundColor: mC,
         primaryColor: Color(0xFF45413b),
         accentColor: Color(0x00FFFFFF),
-        // canvasColor: Color(0xFF757575),
-        // visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CustomDrawer(
-        child: PageHolder(),
-      ),
+      home: PageHolder(),
     );
   }
 }
