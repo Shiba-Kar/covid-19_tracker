@@ -1,14 +1,14 @@
 import 'package:covid_19/models/CovidDataIndianModel.dart';
-import 'package:covid_19/screens/GlobalCovidPage.dart';
 import 'package:covid_19/services/ApiCall.dart';
 import 'package:covid_19/widgets/CustomGridCard.dart';
-import 'package:covid_19/widgets/IndianCard.dart';
-
 import 'package:covid_19/widgets/IndianStatisticsLineChartDaily.dart';
 import 'package:covid_19/widgets/IndianStatisticsLineChartTotal.dart';
 import 'package:covid_19/widgets/LoadingIndicator.dart';
+import 'package:covid_19/widgets/Nm_box.dart';
+import 'package:covid_19/widgets/StateCard.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+
 
 class IndianCovidPage extends StatefulWidget {
   IndianCovidPage({Key key}) : super(key: key);
@@ -25,8 +25,28 @@ class _IndianCovidPageState extends State<IndianCovidPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.height;
     Widget done(CovidDataIndianModel data) {
+      Widget updatedTime() {
+        String date = data.statewise[0].lastupdatedtime;
+
+        var formattedDate = DateFormat('dd/MM/yyyy').parse(date);
+
+        return Text("Updated on " + DateFormat.yMMMd().format(formattedDate));
+      }
+
       return ListView(
         children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  "Live Indian Statistics",
+                  style: TextStyle(color: Colors.white, fontSize: 30.0),
+                ),
+                updatedTime()
+              ],
+            ),
+          ),
           Container(
             padding: const EdgeInsets.all(0.0),
             height: height / 3,
@@ -51,7 +71,6 @@ class _IndianCovidPageState extends State<IndianCovidPage> {
                   title: "ACTIVE",
                   end: double.parse(data.statewise[0].active),
                   color: Colors.blue,
-                
                 ),
                 CustomGridCard(
                   showChange: true,
@@ -70,41 +89,53 @@ class _IndianCovidPageState extends State<IndianCovidPage> {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(10.0),
+          Center(
             child: Text(
-              "Live Indian Statistics",
+              "Daily Statistics",
               style: TextStyle(color: Colors.white, fontSize: 30.0),
             ),
           ),
           Container(
-            height: height / 2,
+            height: height / 1.8,
+          // margin: const EdgeInsets.all(10.0),
             child: ListView(
               physics: ScrollPhysics(parent: ScrollPhysics()),
               scrollDirection: Axis.horizontal,
               children: <Widget>[
                 Container(
-                  height: height / 2,
+                  margin: const EdgeInsets.all(30.0),
+                  decoration: nMbox,
+                  height: height / 1,
                   width: width / 2,
-                  child: IndianStatisticsLineChartDaily(
-                    indianCovidDataModel: data,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IndianStatisticsLineChartDaily(
+                      indianCovidDataModel: data,
+                    ),
                   ),
                 ),
                 Container(
-                  height: height / 2,
+                  decoration: nMbox,
+                  margin: const EdgeInsets.all(30.0),
+                  height: height / 1,
                   width: width / 2,
-                  child: IndianStatisticsLineChartTotal(
-                    indianCovidDataModel: data,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IndianStatisticsLineChartTotal(
+                      indianCovidDataModel: data,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Worst Affected States",
-              style: TextStyle(color: Colors.white, fontSize: 30.0),
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "Worst Affected States",
+                style: TextStyle(color: Colors.white, fontSize: 30.0),
+              ),
             ),
           ),
           Container(
@@ -116,7 +147,11 @@ class _IndianCovidPageState extends State<IndianCovidPage> {
               itemBuilder: (BuildContext context, int index) {
                 List<Statewise> statewise = data.statewise;
                 statewise.removeAt(0);
-                return IndianCard(sateWise: statewise[index]);
+                return StateCard(
+                  tapable: true,
+                  stateWise: statewise[index],
+                  index: index,
+                );
               },
               // scrollDirection: Axis.horizontal,
             ),
