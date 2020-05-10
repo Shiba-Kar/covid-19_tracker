@@ -1,5 +1,3 @@
-// To parse this JSON data, do
-//
 //     final covidCountyHistoryModel = covidCountyHistoryModelFromJson(jsonString);
 
 import 'dart:convert';
@@ -10,24 +8,24 @@ String covidCountyHistoryModelToJson(CovidCountyHistoryModel data) => json.encod
 
 class CovidCountyHistoryModel {
     String country;
-    List<String> provinces;
+   
     Timeline timeline;
 
     CovidCountyHistoryModel({
         this.country,
-        this.provinces,
+       
         this.timeline,
     });
 
     factory CovidCountyHistoryModel.fromJson(Map<String, dynamic> json) => CovidCountyHistoryModel(
         country: json["country"],
-        provinces: List<String>.from(json["provinces"].map((x) => x)),
+       
         timeline: Timeline.fromJson(json["timeline"]),
     );
 
     Map<String, dynamic> toJson() => {
         "country": country,
-        "provinces": List<dynamic>.from(provinces.map((x) => x)),
+      
         "timeline": timeline.toJson(),
     };
 }
