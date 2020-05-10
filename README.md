@@ -32,7 +32,7 @@ The below points enlists features of this application :
 
 ## Screenshots
 
-![ScreenShot 1](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png?s=200)
+![ScreenShot 1](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png| width=50)
 ![ScreenShot 2](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_02.png?s=200)
 ![ScreenShot 3](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_03.png?s=200)
 ![ScreenShot 4](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_04.png?s=200)
