@@ -1,5 +1,5 @@
 on: push
-name: Build Production
+name: Build Debug
 jobs:
   build:
     name: Build APK
@@ -11,15 +11,15 @@ jobs:
         java-version: '12.x'
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '1.15.17'
-        channel: 'dev'
+        flutter-version: '1.17.0'
+        channel: 'stable'
     - run: flutter pub get
-    - run: flutter build apk --split-per-abi -vv
-    - name: Create a Release APK
+    - run: flutter build apk --debug --split-per-abi -vv
+    - name: Create a Build APK
       uses: ncipollo/release-action@v1.6.1
       with:
-        artifacts: "build/app/outputs/apk/release/*.apk"
+        artifacts: "build/app/outputs/apk/debug/*.apk"
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: '2.5'
+        tag: '1.0.0'
         commit: 'master'
         allowUpdates: true
