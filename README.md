@@ -1,6 +1,6 @@
 # COVID-19 Tracker
 
-![App Icon](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/android/app/src/main/res/mipmap-hdpi/ic_launcher.png)
+![App Icon](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/android/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
 This is an aplication build with flutter framework to target IOS, Android and Web.
 This application hit some of the most famous COVID-19 api and serve them in a beautiful UX/UI.
@@ -33,13 +33,13 @@ The below points enlists features of this application :
 
 ## Screenshots
 
-![test image size](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_01.png) ![ScreenShot 2](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_02.png)
+![test image size](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_01.png) ![ScreenShot 2](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_02.png)
 
-![ScreenShot 3](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_03.png) ![ScreenShot 4](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_04.png)
+![ScreenShot 3](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_03.png) ![ScreenShot 4](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_04.png)
 
-![ScreenShot 5](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_05.png) ![ScreenShot 6](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_06.png)
+![ScreenShot 5](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_05.png) ![ScreenShot 6](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_06.png)
 
-![ScreenShot 7](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_07.png) ![ScreenShot 8](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/flutter_08.png)
+![ScreenShot 7](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_07.png) ![ScreenShot 8](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_08.png)
 
 ## COVID-19 APIs
 
