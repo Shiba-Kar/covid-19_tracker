@@ -161,7 +161,7 @@ class _StateCardState extends State<StateCard>
                                 FontWeight.bold,
                               ),
                               text(
-                                widget.stateWise.confirmed.toString(),
+                                widget.stateWise.recovered.toString(),
                                 Colors.green,
                                 FontWeight.normal,
                               ),
