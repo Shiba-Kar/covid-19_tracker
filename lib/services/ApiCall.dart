@@ -44,7 +44,7 @@ class ApiCall {
         url: _urlIndian,
         parser: (contents) => covidDataIndianModelFromJson(contents),
         cache: FileResource(File('$path/indianData.json')),
-        maxAge: Duration(minutes: 8),
+        maxAge: Duration(minutes:8),
         strategy: CacheStrategy.cacheFirst,
       );
       return myDataResource.get();
@@ -91,7 +91,7 @@ class ApiCall {
         url: _urlCovidAll,
         parser: (contents) => covidDataAllModelFromJson(contents),
         cache: FileResource(File('$path/allCountries.json')),
-        maxAge: Duration(minutes: 8),
+        maxAge: Duration(minutes:8),
         strategy: CacheStrategy.cacheFirst,
       );
       return myDataResource.get();

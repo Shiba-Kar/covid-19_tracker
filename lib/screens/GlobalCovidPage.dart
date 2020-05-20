@@ -1,7 +1,6 @@
 import 'package:covid_19/models/CovidDataAllModel.dart';
 import 'package:covid_19/models/CovidDataCountriesModel.dart';
 import 'package:covid_19/services/ApiCall.dart';
-import 'package:covid_19/widgets/AboutMeDialog.dart';
 import 'package:covid_19/widgets/CountryCard.dart';
 import 'package:covid_19/widgets/CustomGridCard.dart';
 import 'package:covid_19/widgets/LoadingIndicator.dart';

@@ -19,10 +19,15 @@ class CovidDataCountriesModel {
     int recovered;
     int active;
     int critical;
-    int casesPerOneMillion;
-    int deathsPerOneMillion;
+    double casesPerOneMillion;
+    double deathsPerOneMillion;
     int tests;
     int testsPerOneMillion;
+    int population;
+    Continent continent;
+    double activePerOneMillion;
+    double recoveredPerOneMillion;
+    double criticalPerOneMillion;
 
     CovidDataCountriesModel({
         this.updated,
@@ -39,6 +44,11 @@ class CovidDataCountriesModel {
         this.deathsPerOneMillion,
         this.tests,
         this.testsPerOneMillion,
+        this.population,
+        this.continent,
+        this.activePerOneMillion,
+        this.recoveredPerOneMillion,
+        this.criticalPerOneMillion,
     });
 
     factory CovidDataCountriesModel.fromJson(Map<String, dynamic> json) => CovidDataCountriesModel(
@@ -52,10 +62,15 @@ class CovidDataCountriesModel {
         recovered: json["recovered"],
         active: json["active"],
         critical: json["critical"],
-        casesPerOneMillion: json["casesPerOneMillion"],
-        deathsPerOneMillion: json["deathsPerOneMillion"],
+        casesPerOneMillion: json["casesPerOneMillion"].toDouble(),
+        deathsPerOneMillion: json["deathsPerOneMillion"].toDouble(),
         tests: json["tests"],
         testsPerOneMillion: json["testsPerOneMillion"],
+        population: json["population"],
+        continent: continentValues.map[json["continent"]],
+        activePerOneMillion: json["activePerOneMillion"].toDouble(),
+        recoveredPerOneMillion: json["recoveredPerOneMillion"].toDouble(),
+        criticalPerOneMillion: json["criticalPerOneMillion"].toDouble(),
     );
 
     Map<String, dynamic> toJson() => {
@@ -73,8 +88,25 @@ class CovidDataCountriesModel {
         "deathsPerOneMillion": deathsPerOneMillion,
         "tests": tests,
         "testsPerOneMillion": testsPerOneMillion,
+        "population": population,
+        "continent": continentValues.reverse[continent],
+        "activePerOneMillion": activePerOneMillion,
+        "recoveredPerOneMillion": recoveredPerOneMillion,
+        "criticalPerOneMillion": criticalPerOneMillion,
     };
 }
+
+enum Continent { NORTH_AMERICA, EUROPE, SOUTH_AMERICA, ASIA, AFRICA, AUSTRALIA_OCEANIA, EMPTY }
+
+final continentValues = EnumValues({
+    "Africa": Continent.AFRICA,
+    "Asia": Continent.ASIA,
+    "Australia/Oceania": Continent.AUSTRALIA_OCEANIA,
+    "": Continent.EMPTY,
+    "Europe": Continent.EUROPE,
+    "North America": Continent.NORTH_AMERICA,
+    "South America": Continent.SOUTH_AMERICA
+});
 
 class CountryInfo {
     int id;
@@ -110,4 +142,18 @@ class CountryInfo {
         "long": long,
         "flag": flag,
     };
+}
+
+class EnumValues<T> {
+    Map<String, T> map;
+    Map<T, String> reverseMap;
+
+    EnumValues(this.map);
+
+    Map<T, String> get reverse {
+        if (reverseMap == null) {
+            reverseMap = map.map((k, v) => new MapEntry(v, k));
+        }
+        return reverseMap;
+    }
 }

@@ -84,7 +84,7 @@ class _StateCardState extends State<StateCard>
                         stateCode: widget.stateWise.statecode,
                         state: widget.stateWise.state,
                       ),
-                    ),
+                    ),  
                   ),
                   contentPadding: const EdgeInsets.all(10.0),
                   title: Text(
