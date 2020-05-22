@@ -2,6 +2,15 @@
 
 ![App Icon](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
+## [Download Android APK](https://github.com/Shiba-Kar/covid-19_tracker/releases/download/v1.0.0/app-arm64-v8a-release.apk)
+
+## [All APKs](https://github.com/Shiba-Kar/covid-19_tracker/releases)
+
+## Special Thanks To The below APIs
+
+ 1. [https://corona.lmao.ninja](https://corona.lmao.ninja)
+ 2. [https://api.covid19india.org/](https://api.covid19india.org/)
+  
 This is an aplication build with flutter framework to target IOS, Android and Web.
 This application hit some of the most famous COVID-19 api and serve them in a beautiful UX/UI.
 The below points enlists features of this application :
@@ -40,8 +49,3 @@ The below points enlists features of this application :
 ![ScreenShot 5](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_05.png) ![ScreenShot 6](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_06.png)
 
 ![ScreenShot 7](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_07.png) ![ScreenShot 8](https://github.com/Shiba-Kar/covid-19_tracker/blob/master/screenshots/flutter_08.png)
-
-## COVID-19 APIs
-
- 1. [https://corona.lmao.ninja](https://corona.lmao.ninja)
- 2. [https://api.covid19india.org/](https://api.covid19india.org/)
