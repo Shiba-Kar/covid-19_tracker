@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:async_resource/file_resource.dart';
-import 'package:covid_19/models/CovidCountyHistoryModel.dart';
-//import 'package:covid_19/models/CovidCountyModel.dart';
-import 'package:covid_19/models/CovidDataAllModel.dart';
-import 'package:covid_19/models/CovidDataCountriesModel.dart';
-import 'package:covid_19/models/CovidDataIndianModel.dart';
-import 'package:covid_19/models/StateDistrictCovidDataModel.dart';
+import 'package:covid_19/models/covid_county_history_model.dart';
+import 'package:covid_19/models/covid_data_all_model.dart';
+import 'package:covid_19/models/covid_data_countries_model.dart';
+import 'package:covid_19/models/covid_data_indian_model.dart';
+import 'package:covid_19/models/state_district_covid_data_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ApiCall {

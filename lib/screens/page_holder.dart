@@ -1,10 +1,9 @@
-import 'package:covid_19/screens/CountriesCovidPage.dart';
-import 'package:covid_19/screens/GlobalCovidPage.dart';
-import 'package:covid_19/screens/IndianCovidPage.dart';
-import 'package:covid_19/screens/IndianStatesCovidPage.dart';
-
-import 'package:covid_19/widgets/NavButtons.dart';
+import 'package:covid_19/screens/countries_covid_page.dart';
+import 'package:covid_19/screens/global_covid_page.dart';
+import 'package:covid_19/screens/indian_covid_page.dart';
+import 'package:covid_19/screens/indian_states_covid_page.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
+import 'package:covid_19/widgets/nav_buttons.dart';
 import 'package:flutter/material.dart';
 
 class PageHolder extends StatefulWidget {
@@ -22,9 +21,9 @@ class _PageHolderState extends State<PageHolder> {
   Widget build(BuildContext context) {
     Widget bottomNavigationBar() {
       return BottomNavigationBar(
-        type : BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
         backgroundColor: mC,
-       selectedFontSize: 15.0,
+        selectedFontSize: 15.0,
         elevation: 0.0,
         iconSize: 0.0,
         onTap: (index) => setState(
@@ -38,36 +37,29 @@ class _PageHolderState extends State<PageHolder> {
           },
         ),
         currentIndex: currentPageIndex,
-       // type: BottomNavigationBarType.shifting,
+        // type: BottomNavigationBarType.shifting,
         items: [
-         
           BottomNavigationBarItem(
             icon: Container(),
             title: NMButtons(
-              down: currentPageIndex == 0 ? true : false,
-              icon: Icons.language,
-            ),
+                down: currentPageIndex == 0 ? true : false,
+                icon: Icons.language),
           ),
           BottomNavigationBarItem(
             icon: Container(),
             title: NMButtons(
-              down: currentPageIndex == 1 ? true : false,
-              icon: Icons.place,
-            ),
+                down: currentPageIndex == 1 ? true : false, icon: Icons.place),
           ),
-           BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Container(),
             title: NMButtons(
-              down: currentPageIndex == 2 ? true : false,
-              icon: Icons.home,
-            ),
+                down: currentPageIndex == 2 ? true : false, icon: Icons.home),
           ),
-             BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Container(),
             title: NMButtons(
-              down: currentPageIndex == 3 ? true : false,
-              icon: Icons.play_for_work,
-            ),
+                down: currentPageIndex == 3 ? true : false,
+                icon: Icons.play_for_work),
           ),
         ],
       );
@@ -83,8 +75,7 @@ class _PageHolderState extends State<PageHolder> {
           GlobalCovidPage(),
           CountriesCovidPage(),
           IndianCovidPage(),
-         IndianStatesCovidPage()
-          
+          IndianStatesCovidPage()
         ],
         onPageChanged: (index) => setState(() {
           currentPageIndex = index;

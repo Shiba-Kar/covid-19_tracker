@@ -1,6 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:covid_19/models/CovidDataIndianModel.dart';
-import 'package:covid_19/screens/DistrictsScreen.dart';
+import 'package:covid_19/models/covid_data_indian_model.dart';
+import 'package:covid_19/screens/districts_screen.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

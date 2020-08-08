@@ -1,6 +1,5 @@
-import 'package:covid_19/widgets/GlowFlags.dart';
-import 'package:covid_19/widgets/NavButtons.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
+import 'package:covid_19/widgets/nav_buttons.dart';
 import 'package:flutter/material.dart';
 
 class AboutMeDialog extends StatefulWidget {
@@ -54,7 +53,6 @@ class _AboutMeDialogState extends State<AboutMeDialog>
               color: mC,
               borderRadius: BorderRadius.all(
                 Radius.circular(20.0),
-              
               ),
             ),
             child: Column(
@@ -88,18 +86,9 @@ class _AboutMeDialogState extends State<AboutMeDialog>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    NMButtons(
-                      down: false,
-                      icon: Icons.shop,
-                    ),
-                    NMButtons(
-                      down: false,
-                      icon: Icons.shop,
-                    ),
-                    NMButtons(
-                      down: false,
-                      icon: Icons.shop,
-                    )
+                    NMButtons(down: false, icon: Icons.shop),
+                    NMButtons(down: false, icon: Icons.shop),
+                    NMButtons(down: false, icon: Icons.shop)
                   ],
                 )
               ],

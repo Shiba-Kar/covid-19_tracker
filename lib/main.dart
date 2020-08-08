@@ -1,4 +1,5 @@
-import 'package:covid_19/screens/PageHolder.dart';
+
+import 'package:covid_19/screens/page_holder.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

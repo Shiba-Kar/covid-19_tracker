@@ -1,6 +1,6 @@
-import 'package:covid_19/models/CovidCountyHistoryModel.dart';
-import 'package:covid_19/services/ApiCall.dart';
-import 'package:covid_19/widgets/LoadingIndicator.dart';
+import 'package:covid_19/models/covid_county_history_model.dart';
+import 'package:covid_19/services/api_call.dart';
+import 'package:covid_19/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
@@ -115,11 +115,11 @@ class _CountryHistoryStatisticsState extends State<CountryHistoryStatistics> {
                     child: Text("120"),
                     value: 120,
                   ),
-                   DropdownMenuItem(
+                  DropdownMenuItem(
                     child: Text("150"),
                     value: 150,
                   ),
-                   DropdownMenuItem(
+                  DropdownMenuItem(
                     child: Text("180"),
                     value: 180,
                   ),
@@ -148,9 +148,8 @@ class _CountryHistoryStatisticsState extends State<CountryHistoryStatistics> {
               ),
               domainAxis: charts.DateTimeAxisSpec(
                 renderSpec: new charts.GridlineRendererSpec(
-              labelAnchor: charts.TickLabelAnchor.inside,
-                  lineStyle:  new charts.LineStyleSpec(
-                  
+                  labelAnchor: charts.TickLabelAnchor.inside,
+                  lineStyle: new charts.LineStyleSpec(
                     color: charts.MaterialPalette.gray.shadeDefault,
                     thickness: 0,
                     dashPattern: [2, 2, 1, 1],
@@ -210,11 +209,9 @@ class _CountryHistoryStatisticsState extends State<CountryHistoryStatistics> {
 
     Widget body() {
       return Container(
-        child: FutureBuilder(
+        child: FutureBuilder<CovidCountyHistoryModel>(
           future: _apiCall.getHistoricalData(
-            country: widget.country,
-            pastRecords: _pastRecords,
-          ),
+              country: widget.country, pastRecords: _pastRecords),
           builder: (BuildContext context,
               AsyncSnapshot<CovidCountyHistoryModel> snapshot) {
             Widget active() {

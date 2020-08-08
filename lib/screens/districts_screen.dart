@@ -1,7 +1,7 @@
-import 'package:covid_19/models/StateDistrictCovidDataModel.dart';
-import 'package:covid_19/services/ApiCall.dart';
-import 'package:covid_19/widgets/DistrictCard.dart';
-import 'package:covid_19/widgets/LoadingIndicator.dart';
+import 'package:covid_19/models/state_district_covid_data_model.dart';
+import 'package:covid_19/services/api_call.dart';
+import 'package:covid_19/widgets/district_card.dart';
+import 'package:covid_19/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 class DistrictsScreen extends StatefulWidget {

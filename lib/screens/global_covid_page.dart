@@ -1,10 +1,10 @@
-import 'package:covid_19/models/CovidDataAllModel.dart';
-import 'package:covid_19/models/CovidDataCountriesModel.dart';
-import 'package:covid_19/services/ApiCall.dart';
-import 'package:covid_19/widgets/CountryCard.dart';
-import 'package:covid_19/widgets/CustomGridCard.dart';
-import 'package:covid_19/widgets/LoadingIndicator.dart';
+import 'package:covid_19/models/covid_data_all_model.dart';
+import 'package:covid_19/models/covid_data_countries_model.dart';
+import 'package:covid_19/services/api_call.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
+import 'package:covid_19/widgets/country_card.dart';
+import 'package:covid_19/widgets/custom_grid_card.dart';
+import 'package:covid_19/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

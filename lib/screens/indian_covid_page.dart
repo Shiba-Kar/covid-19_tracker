@@ -1,11 +1,11 @@
-import 'package:covid_19/models/CovidDataIndianModel.dart';
-import 'package:covid_19/services/ApiCall.dart';
-import 'package:covid_19/widgets/CustomGridCard.dart';
-import 'package:covid_19/widgets/IndianStatisticsLineChartDaily.dart';
-import 'package:covid_19/widgets/IndianStatisticsLineChartTotal.dart';
-import 'package:covid_19/widgets/LoadingIndicator.dart';
+import 'package:covid_19/models/covid_data_indian_model.dart';
+import 'package:covid_19/services/api_call.dart';
 import 'package:covid_19/widgets/Nm_box.dart';
-import 'package:covid_19/widgets/StateCard.dart';
+import 'package:covid_19/widgets/custom_grid_card.dart';
+import 'package:covid_19/widgets/indian_statistics_line_chart_daily.dart';
+import 'package:covid_19/widgets/indian_statistics_line_chart_total.dart';
+import 'package:covid_19/widgets/loading_indicator.dart';
+import 'package:covid_19/widgets/state_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

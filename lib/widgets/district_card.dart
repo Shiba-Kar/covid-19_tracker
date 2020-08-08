@@ -1,74 +1,39 @@
-import 'package:covid_19/models/CovidDataCountriesModel.dart';
-import 'package:covid_19/screens/DetailedCountryScreen.dart';
-import 'package:covid_19/widgets/GlowFlags.dart';
+import 'package:avatar_glow/avatar_glow.dart';
+import 'package:covid_19/models/state_district_covid_data_model.dart';
+
 import 'package:covid_19/widgets/Nm_box.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class CountryCard extends StatefulWidget {
-  final CovidDataCountriesModel covidDataCountriesModel;
-  final bool tapable;
-  const CountryCard(
-      {@required this.covidDataCountriesModel, @required this.tapable, Key key})
-      : super(key: key);
+class DistrictCard extends StatefulWidget {
+  final DistrictDatum district;
+  final int index;
+  const DistrictCard({@required this.district,@required this.index, Key key}) : super(key: key);
 
   @override
-  _CountryCardState createState() => _CountryCardState();
+  _DistrictCardState createState() => _DistrictCardState();
 }
 
-class _CountryCardState extends State<CountryCard>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<Offset> scaleAnimation;
+class _DistrictCardState extends State<DistrictCard> {
   @override
   void initState() {
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
-    scaleAnimation = Tween<Offset>(begin: Offset(2.0, 0.0), end: Offset.zero)
-        .animate(controller);
-
-    controller.addListener(() {
-      setState(() {});
-    });
-
-    controller.forward();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
     Widget text(String text, Color color, FontWeight fontWeight) {
       return Text(
         text,
-        style: TextStyle(color: color, fontSize: 13.0, fontWeight: fontWeight),
+        style: TextStyle(color: color, fontSize: width/30, fontWeight: fontWeight),
       );
     }
 
-    Widget updatedTime() {
-      var x = DateTime.fromMicrosecondsSinceEpoch(
-          widget.covidDataCountriesModel.updated * 1000);
-      var formattedDate = DateFormat.yMMMd().format(x);
-
-      return Text(
-        "Updated on " + formattedDate,
-        style: TextStyle(color: mCL),
-      );
-    }
-
-    return SlideTransition(
-      position: scaleAnimation,
-      child: Container(
-        margin: const EdgeInsets.all(10.0),
-        child: Stack(
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+  
+      child:  Stack(
           children: <Widget>[
             Align(
               alignment: Alignment.centerRight,
@@ -76,13 +41,7 @@ class _CountryCardState extends State<CountryCard>
                 width: width / 1.23,
                 decoration: nMboxInvert,
                 child: ListTile(
-                  onTap: () => widget.tapable?Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DetailedCountryScreen(
-                        covidDataCountriesModel: widget.covidDataCountriesModel,
-                      ),
-                    ),
-                  ):null,
+                  
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,9 +60,10 @@ class _CountryCardState extends State<CountryCard>
                                     "CASES : ",
                                     Colors.yellow,
                                     FontWeight.bold,
+                                  
                                   ),
                                   text(
-                                    widget.covidDataCountriesModel.cases
+                                    widget.district.confirmed
                                         .toString(),
                                     Colors.yellow,
                                     FontWeight.normal,
@@ -112,7 +72,7 @@ class _CountryCardState extends State<CountryCard>
                               ),
                               text(
                                 "+" +
-                                    widget.covidDataCountriesModel.todayCases
+                                    widget.district.delta.confirmed
                                         .toString(),
                                 Colors.yellow,
                                 FontWeight.bold,
@@ -127,7 +87,7 @@ class _CountryCardState extends State<CountryCard>
                                 FontWeight.bold,
                               ),
                               text(
-                                widget.covidDataCountriesModel.active
+                                widget.district.active
                                     .toString(),
                                 Colors.blue,
                                 FontWeight.normal,
@@ -145,19 +105,31 @@ class _CountryCardState extends State<CountryCard>
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Row(
+                          Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  text(
+                                    "RECOVERED : ",
+                                    Colors.green,
+                                    FontWeight.bold,
+                                  ),
+                                  text(
+                                    widget.district.recovered
+                                        .toString(),
+                                    Colors.green,
+                                    FontWeight.normal,
+                                  ),
+                                ],
+                              ),
                               text(
-                                "RECOVERED : ",
+                                "+" +
+                                    widget.district.delta.recovered
+                                        .toString(),
                                 Colors.green,
                                 FontWeight.bold,
-                              ),
-                              text(
-                                widget.covidDataCountriesModel.recovered
-                                    .toString(),
-                                Colors.green,
-                                FontWeight.normal,
-                              ),
+                              )
                             ],
                           ),
                           Column(
@@ -166,12 +138,12 @@ class _CountryCardState extends State<CountryCard>
                               Row(
                                 children: <Widget>[
                                   text(
-                                    "DEATH : ",
+                                    "Deseased : ",
                                     Colors.red,
                                     FontWeight.bold,
                                   ),
                                   text(
-                                    widget.covidDataCountriesModel.deaths
+                                    widget.district.deceased
                                         .toString(),
                                     Colors.red,
                                     FontWeight.normal,
@@ -180,7 +152,7 @@ class _CountryCardState extends State<CountryCard>
                               ),
                               text(
                                 "+" +
-                                    widget.covidDataCountriesModel.todayDeaths
+                                    widget.district.delta.deceased
                                         .toString(),
                                 Colors.red,
                                 FontWeight.bold,
@@ -192,36 +164,46 @@ class _CountryCardState extends State<CountryCard>
                     ],
                   ),
                   contentPadding: const EdgeInsets.all(10.0),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        widget.covidDataCountriesModel.country,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      updatedTime()
-                    ],
+                  title: Text(
+                    widget.district.district,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-            Align(
+           Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                //color: Colors.red,
-                height: height / 10,
-                width: height / 10,
-                child: GlowFlags(
-                  flagUrl: widget.covidDataCountriesModel.countryInfo.flag,
-                ),
-              ),
+                  //color: Colors.red,
+                  height: height / 10,
+                  width: height / 10,
+                  child: AvatarGlow(
+                    startDelay: Duration(milliseconds: 1000),
+                    glowColor: Colors.white,
+                    endRadius: 50.0,
+                    duration: Duration(milliseconds: 2000),
+                    repeat: true,
+                    showTwoGlows: true,
+                    repeatPauseDuration: Duration(milliseconds: 100),
+                    child: Material(
+                      elevation: 8.0,
+                      shape: CircleBorder(),
+                      child: CircleAvatar(
+                        backgroundColor: mC,
+                        child: Text((widget.index + 1).toString()),
+                        radius: 25.0,
+                      ),
+                    ),
+                    shape: BoxShape.circle,
+                    animate: true,
+                    curve: Curves.fastOutSlowIn,
+                  )),
             )
           ],
         ),
-      ),
     );
   }
 }
